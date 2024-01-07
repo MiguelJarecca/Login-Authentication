@@ -1,9 +1,35 @@
+import { UserRow } from "./UserRow"
 
-export const UserList = () => {
+export const UserList = ({ users=[] }) => {
 
+    console.log('control', users)
     return (
         <>
             <h2>Lista de usuarios</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>nombre</th>
+                        <th>correo electronico</th>
+                        <th>actualizar</th>
+                        <th>eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map((user) => (
+                        <UserRow 
+                            key = {user.id}
+                            id = {user.id}
+                            userName = {user.userName}
+                            email = {user.email}
+                        />
+                    ))}
+                   
+                </tbody>
+
+            </table>
         </>
     )    
 }

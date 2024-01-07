@@ -14,14 +14,14 @@ function App() {
   ];
 
   return (
-    <>
+    <section>
       <h1>APP</h1>
 
       <div className="container">
         <UserForm />
-        <UserList />
+        <UserList users={initialUsers}/>
       </div>
-    </>
+    </section>
   )
 }
 
