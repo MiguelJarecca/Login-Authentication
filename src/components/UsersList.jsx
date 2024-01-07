@@ -1,8 +1,7 @@
 import { UserRow } from "./UserRow"
 
-export const UserList = ({ users=[] }) => {
+export const UserList = ({ users=[], handleDeleteUser }) => {
 
-    console.log('control', users)
     return (
         <>
             <h2>Lista de usuarios</h2>
@@ -24,6 +23,7 @@ export const UserList = ({ users=[] }) => {
                             id = {user.id}
                             userName = {user.userName}
                             email = {user.email}
+                            handleDeleteUser = {handleDeleteUser}
                         />
                     ))}
                    

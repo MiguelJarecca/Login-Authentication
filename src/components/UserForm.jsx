@@ -1,14 +1,6 @@
 import { useState } from "react";
 
-const initialUserForm = 
-    {
-        userName: '',
-        password: '',
-        email: '',
-    }
-
-
-export const UserForm = () => {
+export const UserForm = ( { initialUserForm, handleAddUser}) => {
 
     const [userForm, setUserForm] = useState(initialUserForm);
 
@@ -22,11 +14,25 @@ export const UserForm = () => {
             })
     }
 
+    const onSubmitForm = (event) =>  {
+        //Evita que se recargue la pagina cuando enviamos el form
+        event.preventDefault();
+        if (!userName || !password || !email) {
+            alert('Completar el formulario');
+            return;
+        }
+
+        handleAddUser(userForm);
+
+        //Cuando enviamos los datos limpiamos los valores
+        setUserForm(initialUserForm);
+    }
+
     return (
         <div className="container-form">
             <h2>Formulario de Usuario</h2>
 
-            <form className="form">
+            <form className="form" onSubmit={onSubmitForm}>
                 <input 
                     type="text" 
                     placeholder="nombre"
@@ -44,7 +50,7 @@ export const UserForm = () => {
                 <input 
                     type="email" 
                     placeholder="correo electronico"
-                    name="value"
+                    name="email"
                     value={email}
                     onChange={onInputChange}
                 />
