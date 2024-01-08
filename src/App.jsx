@@ -1,8 +1,8 @@
-import { useReducer } from 'react';
+// import { useReducer } from 'react';
 import './App.css'
-import { UserForm } from './components/UserForm'
-import { UserList } from './components/UsersList'
-import { UsersReducer } from './reducers/UsersReducer';
+// import { UserForm } from './components/UserForm'
+// import { UserList } from './components/UsersList'
+// import { UsersReducer } from './reducers/UsersReducer';
 
 const initialUsers = [
   {
@@ -22,21 +22,21 @@ const initialUserForm =
 
 function App() {
 
-  const [users, dispach] = useReducer(UsersReducer, initialUsers);
+  // const [users, dispach] = useReducer(UsersReducer, initialUsers);
 
-  const handleAddUser = (user) => {
-    dispach({
-      type: 'addUser',
-      payload: user,
-    })
-  };
+  // const handleAddUser = (user) => {
+  //   dispach({
+  //     type: 'addUser',
+  //     payload: user,
+  //   })
+  // };
 
-  const handleDeleteUser = (id) => {
-    dispach({
-      type: 'deleteUser',
-      payload: id,
-    })
-  };
+  // const handleDeleteUser = (id) => {
+  //   dispach({
+  //     type: 'deleteUser',
+  //     payload: id,
+  //   })
+  // };
 
   return (
     <section>
@@ -44,14 +44,21 @@ function App() {
 
       <div className="container">
            
-        <UserForm 
+        {/* <UserForm 
           handleAddUser={handleAddUser}
           initialUserForm={initialUserForm}
         />
-        <UserList 
-          users={users}
-          handleDeleteUser={handleDeleteUser}
-        />
+
+        {users && users.length === 0
+          ? <div> No hay usuarios en el sistema!</div>
+          : <UserList 
+            users={users}
+            handleDeleteUser={handleDeleteUser}
+            /> 
+        } */}
+
+        <h1>hola lokooo</h1>
+        
       </div>
     </section>
   )
