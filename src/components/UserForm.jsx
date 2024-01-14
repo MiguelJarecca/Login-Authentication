@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const UserForm = ( { initialUserForm, handleAddUser}) => {
+export const UserForm = ( { initialUserForm, handleAddUser, userSelect}) => {
 
     const [userForm, setUserForm] = useState(initialUserForm);
+    const {id, userName, password, email} = userForm;
 
-    const {userName, password, email} = userForm;
+    useEffect (() => {
+        setUserForm({...userSelect});
+    },[userSelect]);
 
     const onInputChange = ({target}) => {
         const {name, value} = target;
@@ -54,6 +57,12 @@ export const UserForm = ( { initialUserForm, handleAddUser}) => {
                     value={email}
                     onChange={onInputChange}
                 />
+                <input
+                    type="hidden"
+                    name="id"
+                    value={id}
+                />
+
                 <button type="submit"> Crear Usuario</button>
             </form>
         </div>

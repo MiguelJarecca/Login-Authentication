@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import './App.css'
 import { UserForm } from './components/UserForm'
 import { UserList } from './components/UsersList'
@@ -15,6 +15,7 @@ const initialUsers = [
 
 const initialUserForm = 
     {
+        id: 0,
         userName: '',
         password: '',
         email: '',
@@ -23,10 +24,24 @@ const initialUserForm =
 function App() {
 
   const [users, dispach] = useReducer(UsersReducer, initialUsers);
+  const [userSelect, setUserSelect] = useState(initialUserForm);
 
+  console.log('control update', users)
   const handleAddUser = (user) => {
+
+  console.log('control user modificado', user)
+
+    let type;
+
+      if (user.id === 0) {
+        type='addUser'
+      } else {
+        
+        type='updateUser'
+      }
+
     dispach({
-      type: 'addUser',
+      type: type,
       payload: user,
     })
   };
@@ -38,6 +53,11 @@ function App() {
     })
   };
 
+  const handleSelectUser = (user) => {
+    //creamos un clon de user con el ...
+    setUserSelect({...user});
+  }
+
   return (
     <section>
       <h1>APP</h1>
@@ -47,6 +67,7 @@ function App() {
         <UserForm 
           handleAddUser={handleAddUser}
           initialUserForm={initialUserForm}
+          userSelect={userSelect}
         />
 
         {users && users.length === 0
@@ -54,6 +75,7 @@ function App() {
           : <UserList 
             users={users}
             handleDeleteUser={handleDeleteUser}
+            handleSelectUser={handleSelectUser}
             /> 
         }
 
