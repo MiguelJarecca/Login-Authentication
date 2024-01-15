@@ -70,7 +70,7 @@ function App() {
           userSelect={userSelect}
         />
 
-        {users && users.length === 0
+        {users.length === 0
           ? <div> No hay usuarios en el sistema!</div>
           : <UserList 
             users={users}

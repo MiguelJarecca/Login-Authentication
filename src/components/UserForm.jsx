@@ -63,7 +63,10 @@ export const UserForm = ( { initialUserForm, handleAddUser, userSelect}) => {
                     value={id}
                 />
 
-                <button type="submit"> Crear Usuario</button>
+                <button 
+                type="submit"
+                > 
+                {id > 0 ? 'Actualizar Usuario' : 'Crear Usuario' }</button>
             </form>
         </div>
     )    
