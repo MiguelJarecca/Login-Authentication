@@ -23,7 +23,6 @@ export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
                             id = {user.id}
                             userName = {user.userName}
                             email = {user.email}
-                            password= {user.password}
                             handleDeleteUser = {handleDeleteUser}
                             handleSelectUser= {handleSelectUser}
                         />

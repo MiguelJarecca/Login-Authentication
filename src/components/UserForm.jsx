@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
-export const UserForm = ( { initialUserForm, handleAddUser, userSelect}) => {
+export const UserForm = ( { initialUserForm, handleAddUser, userSelect, handleCloseForm}) => {
 
     const [userForm, setUserForm] = useState(initialUserForm);
     const {id, userName, password, email} = userForm;
@@ -20,14 +21,24 @@ export const UserForm = ( { initialUserForm, handleAddUser, userSelect}) => {
     const onSubmitForm = (event) =>  {
         //Evita que se recargue la pagina cuando enviamos el form
         event.preventDefault();
-        if (!userName || !password || !email) {
-            alert('Completar el formulario');
+        if (!userName || (!password && id === 0) || !email) {
+
+            Swal.fire({
+                title: "Error de validacion!",
+                text: "Completar el formulario.",
+                icon: "error"
+              });
             return;
         }
 
         handleAddUser(userForm);
 
         //Cuando enviamos los datos limpiamos los valores
+        setUserForm(initialUserForm);
+    }
+
+    const onCloseForm = () => {
+        handleCloseForm();
         setUserForm(initialUserForm);
     }
 
@@ -43,13 +54,14 @@ export const UserForm = ( { initialUserForm, handleAddUser, userSelect}) => {
                     value={userName}
                     onChange={onInputChange}
                 />
-                <input 
+                {id > 0 ? '' : <input 
                     type="password" 
                     placeholder="contraseña"
                     name="password"
                     value={password}
                     onChange={onInputChange}
-                />
+                /> }
+                
                 <input 
                     type="email" 
                     placeholder="correo electronico"
@@ -67,6 +79,12 @@ export const UserForm = ( { initialUserForm, handleAddUser, userSelect}) => {
                 type="submit"
                 > 
                 {id > 0 ? 'Actualizar Usuario' : 'Crear Usuario' }</button>
+
+                <button
+                    type="button"
+                    onClick={() => onCloseForm()}>
+                    Cerrar
+                </button>
             </form>
         </div>
     )    

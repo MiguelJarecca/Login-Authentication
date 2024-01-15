@@ -1,5 +1,5 @@
 
-export const UserRow = ({ handleDeleteUser, handleSelectUser, id, userName, email, password }) => {
+export const UserRow = ({ handleDeleteUser, handleSelectUser, id, userName, email }) => {
 
     const onDeleteUser = (id) => {
         handleDeleteUser(id);
@@ -18,7 +18,7 @@ export const UserRow = ({ handleDeleteUser, handleSelectUser, id, userName, emai
                 <td>
                     <button
                         type="button"
-                        onClick={() => onSelectetUser({id, userName, email, password})}
+                        onClick={() => onSelectetUser({id, userName, email})}
                         >
                         Actualizar    
                     </button>

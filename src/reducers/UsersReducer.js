@@ -21,7 +21,8 @@ export const UsersReducer = (state = [], action) => {
             return state.map(u => {
                     if (u.id === action.payload.id) {
                         return {
-                            ...action.payload
+                            ...action.payload,
+                            password: u.password
                         };
                     }
                     return u;
