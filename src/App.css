@@ -12,8 +12,14 @@ html {
 
 body {
     padding: 2rem 10%;
-}
-
+    height: 100vh;
+    background-color: #b4e6e8;
+    opacity: 0.8;
+    background-image:  radial-gradient(#ffffff 0.5px, transparent 0.5px), radial-gradient(#ffffff 0.5px, #b4e6e8 0.5px);
+    background-size: 20px 20px;
+    background-position: 0 0,10px 10px;
+} 
+    
 section {
     display: flex;
     flex-direction: column;
@@ -35,3 +41,44 @@ section {
     flex-direction: column;
     gap: 2rem;
 }
+
+/*================= LOGIN ================*/
+
+.container-login {
+    max-width: 40rem;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.container-login h3 {
+    font-size: 3rem;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.container-login form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 5rem 1.5rem 5rem;
+}
+
+.container-login form input {
+    font-size: 1.5rem;
+    padding: .4rem;
+}
+
+.container-login form button {
+    font-size: 1.5rem;
+    margin: auto;
+    padding: .4rem 2rem;
+    border-radius: 5px;
+}
+
+.container-login form button:hover {
+    cursor: pointer;
+} 

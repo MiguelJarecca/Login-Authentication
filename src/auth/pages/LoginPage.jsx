@@ -33,36 +33,34 @@ export const LoginPage = ({handleLogin}) => {
     }
 
     return(
-        <div>
 
-            <div>
-                <h3>Login page</h3>
+        <div className="container-login">
+            <h3>Inicia Sesion</h3>
 
-                <form onSubmit={onSubmit}>
-                    <input 
-                        type="text"
-                        placeholder="username"
-                        name="username"
-                        value={username}
-                        onChange={onInputChange}
-                        />
+            <form onSubmit={onSubmit}>
+                <input 
+                    type="text"
+                    placeholder="nombre:"
+                    name="username"
+                    value={username}
+                    onChange={onInputChange}
+                    />
 
-                    <input 
-                        type="text"
-                        placeholder="password"
-                        name="password"
-                        value={password}
-                        onChange={onInputChange}
-                        />  
+                <input 
+                    type="text"
+                    placeholder="contraseña:"
+                    name="password"
+                    value={password}
+                    onChange={onInputChange}
+                    />  
 
-                    <button
-                        type="submit"
-                        >
-                        Login
-                    </button>      
-                </form>
-            </div>
-
+                <button
+                    type="submit"
+                    >
+                    Iniciar
+                </button>      
+            </form>
         </div>
+
     )
 };
