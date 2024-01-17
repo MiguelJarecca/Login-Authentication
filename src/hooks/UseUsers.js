@@ -1,5 +1,6 @@
 import { useReducer, useState } from "react";
 import { UsersReducer } from "../reducers/UsersReducer";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const initialUsers = [
@@ -24,6 +25,8 @@ export const UseUsers = () => {
     const [users, dispach] = useReducer(UsersReducer, initialUsers);
     const [userSelect, setUserSelect] = useState(initialUserForm);
     const [visibleForm, setVisibleForm] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleAddUser = (user) => {
   
@@ -53,6 +56,7 @@ export const UseUsers = () => {
 
       setVisibleForm(false);
       setUserSelect(initialUserForm);
+      navigate('/users');
     };
   
     const handleDeleteUser = (id) => {
@@ -65,6 +69,7 @@ export const UseUsers = () => {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Si, Eliminar!"
+
       }).then((result) => {
         if (result.isConfirmed) {
 

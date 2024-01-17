@@ -80,11 +80,12 @@ export const UserForm = ( { initialUserForm, handleAddUser, userSelect, handleCl
                 > 
                 {id > 0 ? 'Actualizar Usuario' : 'Crear Usuario' }</button>
 
-                <button
+                {!handleCloseForm || <button
                     type="button"
                     onClick={() => onCloseForm()}>
                     Cerrar
-                </button>
+                </button>}
+                
             </form>
         </div>
     )    

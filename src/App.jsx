@@ -5,23 +5,31 @@ import { UserPage } from './pages/UsersPage';
 
 import { NavBar } from './components/layout/NavBar';
 import { UseAuth } from './auth/hooks/UseAuth';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { UserRoute } from './routes/UserRoute';
 
 function App() {
 
   const { login, handleLogin, handleLogout } = UseAuth();
 
   return (
-    <>
+    <Routes>
       {login.isAuth
         ? (
-            <> 
-              <UserPage />
-              <NavBar login={login} handleLogout={handleLogout}/>
-            </>
+            <Route path='/*' element={<UserRoute
+              login={login}
+              handleLogout={handleLogout}/>}/>
           ) 
-        : <LoginPage handleLogin={handleLogin}/>}
+        : <>
+            <Route path='/login'
+              element={<LoginPage handleLogin={handleLogin}/>}/>
+
+            <Route path='/*' element={<Navigate to={'/login'}/>}/>  
+          </> 
+        
+        }
        
-    </>
+    </Routes>
   )
 }
 
