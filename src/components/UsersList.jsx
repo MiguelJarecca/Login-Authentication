@@ -13,6 +13,7 @@ export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
                         <th>nombre</th>
                         <th>correo electronico</th>
                         <th>actualizar</th>
+                        <th>actualizar ruta</th>
                         <th>eliminar</th>
                     </tr>
                 </thead>
