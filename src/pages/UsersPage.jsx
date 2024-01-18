@@ -1,19 +1,19 @@
+import { useContext } from "react";
 import { UserForm } from "../components/UserForm";
 import { UserList } from "../components/UsersList";
+import { UserContext } from "../context/UserContext";
 
-export const UserPage = ({
+export const UsersPage = () => {
+
+  const {
     users,
     userSelect,
-    initialUserForm,
     visibleForm,
-
-    handleAddUser,
     handleDeleteUser,
     handleSelectUser,
     handleOpenForm,
-    handleCloseForm
-
-    }) => {
+    handleCloseForm,
+    } = useContext(UserContext);
     
       return (
         <section>
@@ -21,8 +21,6 @@ export const UserPage = ({
     
           <div className="container">
             {!visibleForm || <UserForm 
-              handleAddUser={handleAddUser}
-              initialUserForm={initialUserForm}
               userSelect={userSelect}
               handleCloseForm={handleCloseForm}
             />}   

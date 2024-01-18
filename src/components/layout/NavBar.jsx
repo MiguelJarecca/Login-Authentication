@@ -1,8 +1,10 @@
+import { useContext } from "react"
 import { NavLink } from "react-router-dom"
+import { AuthContext } from "../../auth/context/AuthContext"
 
-export const NavBar = ({login, handleLogout}) => {
+export const NavBar = () => {
 
-
+  const { login, handleLogout } = useContext(AuthContext);
 
   return (
     <div className="nav-bar">

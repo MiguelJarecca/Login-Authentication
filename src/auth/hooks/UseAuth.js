@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { LoginReducer } from "../pages/reducers/LoginReducer";
+import { LoginReducer } from "../reducers/LoginReducer";
 import { AuthService } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 

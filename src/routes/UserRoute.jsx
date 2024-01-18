@@ -1,55 +1,27 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-import { UserPage } from "../pages/UsersPage"
+import { UsersPage } from "../pages/UsersPage"
 import { NavBar } from "../components/layout/NavBar"
 import { RegisterPage } from "../pages/RegisterPage"
-import { UseUsers } from "../hooks/UseUsers"
+import { UserProvider } from "../context/UserProvider"
 
-export const  UserRoute = ({ login, handleLogout }) => {
-
-    const {
-        users,
-        userSelect,
-        initialUserForm,
-        visibleForm,
-    
-        handleAddUser,
-        handleDeleteUser,
-        handleSelectUser,
-        handleOpenForm,
-        handleCloseForm
-    
-       } = UseUsers();
+export const  UserRoute = () => {
 
     return (
         <>
-            <NavBar login={login} handleLogout={handleLogout}/> 
+            <UserProvider>
+                <NavBar /> 
 
-            <Routes>
-                <Route path="users" element={<UserPage 
-                      users={users}
-                      userSelect={userSelect}
-                      initialUserForm={initialUserForm}
-                      visibleForm={visibleForm}
-                  
-                      handleAddUser={handleAddUser}
-                      handleDeleteUser={handleDeleteUser}
-                      handleSelectUser={handleSelectUser}
-                      handleOpenForm={handleOpenForm}
-                      handleCloseForm={handleCloseForm}
-                />} />
+                <Routes>
+                    <Route path="users" element={<UsersPage />} />
 
-                <Route path="users/register" element={<RegisterPage 
-                    handleAddUser={handleAddUser}
-                    initialUserForm={initialUserForm}/>} />
-                
-                <Route path="users/update/:id" element={<RegisterPage 
-                    users={users}
-                    handleAddUser={handleAddUser}
-                    initialUserForm={initialUserForm}/>} />
+                    <Route path="users/register" element={<RegisterPage />} />
+                    
+                    <Route path="users/update/:id" element={<RegisterPage />} />
 
-                <Route path="/" element={<Navigate to="/users"/>} />
+                    <Route path="/" element={<Navigate to="/users"/>} />
 
-            </Routes>
+                </Routes>
+            </UserProvider>
         </>
     )
 }

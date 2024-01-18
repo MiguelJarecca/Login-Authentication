@@ -2,25 +2,23 @@ import './App.css'
 
 import { LoginPage } from './auth/pages/LoginPage'
 
-import { UseAuth } from './auth/hooks/UseAuth';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { UserRoute } from './routes/UserRoute';
+import { useContext } from 'react';
+import { AuthContext } from './auth/context/AuthContext';
 
 function App() {
 
-  const { login, handleLogin, handleLogout } = UseAuth();
+  const { login } = useContext(AuthContext);
 
   return (
     <Routes>
       {login.isAuth
         ? (
-            <Route path='/*' element={<UserRoute
-              login={login}
-              handleLogout={handleLogout}/>}/>
+            <Route path='/*' element={<UserRoute />}/>
           ) 
         : <>
-            <Route path='/login'
-              element={<LoginPage handleLogin={handleLogin}/>}/>
+            <Route path='/login' element={<LoginPage />}/>
 
             <Route path='/*' element={<Navigate to={'/login'}/>}/>  
           </> 
