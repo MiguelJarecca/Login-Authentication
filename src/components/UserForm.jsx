@@ -43,9 +43,7 @@ export const UserForm = ( { initialUserForm, handleAddUser, userSelect, handleCl
     }
 
     return (
-        <div className="container-form">
-            <h2>Formulario de Usuario</h2>
-
+        <div>
             <form className="form" onSubmit={onSubmitForm}>
                 <input 
                     type="text" 

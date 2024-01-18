@@ -5,23 +5,25 @@ export const NavBar = ({login, handleLogout}) => {
 
 
   return (
-    <div>
+    <div className="nav-bar">
 
       <ul>
         <li>
             <NavLink to="/users"> Usuarios</NavLink>
-            <NavLink to="/users/register"> Crear Usuario</NavLink>
+            <NavLink to="/users/register"> Crear usuario</NavLink>
         </li>
       </ul>
 
-      <div>hola soy {login.user?.username}</div>
+      <div>
+        <h3>Hola {login.user?.username}</h3>
 
-        <button 
+          <button 
             type="submit"
             onClick={handleLogout}
             >
-            Cerrar Sesion
-        </button>
+            Cerrar sesion
+          </button>
+      </div>
     </div>
   )
 }

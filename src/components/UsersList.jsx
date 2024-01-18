@@ -3,7 +3,7 @@ import { UserRow } from "./UserRow"
 export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
 
     return (
-        <>
+        <div className="container-table">
             <h2>Lista de usuarios</h2>
 
             <table>
@@ -32,6 +32,6 @@ export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
                 </tbody>
 
             </table>
-        </>
+        </div>
     )    
 }
