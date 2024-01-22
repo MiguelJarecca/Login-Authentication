@@ -1,10 +1,10 @@
-package miguel.backenduserapp;
+package com.miguel.backenduser;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendUserAppApplicationTests {
+class BackendUserApplicationTests {
 
 	@Test
 	void contextLoads() {
