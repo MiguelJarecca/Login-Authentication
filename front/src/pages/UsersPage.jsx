@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserForm } from "../components/UserForm";
 import { UserList } from "../components/UsersList";
 import { UserContext } from "../context/UserContext";
@@ -13,7 +13,12 @@ export const UsersPage = () => {
     handleSelectUser,
     handleOpenForm,
     handleCloseForm,
+    getUsers,
     } = useContext(UserContext);
+
+    useEffect(() => {
+      getUsers();
+    },[]);
     
       return (
         <section>

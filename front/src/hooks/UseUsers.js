@@ -2,15 +2,9 @@ import { useReducer, useState } from "react";
 import { UsersReducer } from "../reducers/UsersReducer";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { findAll, remove, save, update } from "../services/UserService";
 
-const initialUsers = [
-    {
-      id: 1,
-      userName: 'miguel',
-      password: 123456,
-      email: 'user1@gmail.com',
-    }  
-  ];
+const initialUsers = [];
   
   const initialUserForm = 
       {
@@ -28,20 +22,39 @@ export const UseUsers = () => {
 
     const navigate = useNavigate();
 
-    const handleAddUser = (user) => {
+    //comunicacion con el userService-backend-traer todos los usarios
+    const getUsers = async() => {
+
+      const result = await findAll();
+
+      dispach({
+        type: 'loadingUsers',
+        payload: result.data
+      });
+
+    };
+
+    //comunicacion con el userService-backend-guardar o actualizar usuario
+    const handleAddUser = async(user) => {
   
       let type;
+      let response;
+
+      if (user.id === 0) {
+        response = await save(user);
+      } else {
+        response = await update(user);
+      }
   
         if (user.id === 0) {
           type='addUser'
         } else {
-          
           type='updateUser'
         }
   
       dispach({
         type: type,
-        payload: user,
+        payload: response.data,
       });
 
       Swal.fire({
@@ -59,6 +72,7 @@ export const UseUsers = () => {
       navigate('/users');
     };
   
+    //comunicacion con el userService-backend-eliminar usuario
     const handleDeleteUser = (id) => {
 
       Swal.fire({
@@ -72,6 +86,8 @@ export const UseUsers = () => {
 
       }).then((result) => {
         if (result.isConfirmed) {
+
+          remove(id);
 
             dispach({
                 type: 'deleteUser',
@@ -113,7 +129,8 @@ export const UseUsers = () => {
             handleDeleteUser,
             handleSelectUser,
             handleOpenForm,
-            handleCloseForm
+            handleCloseForm,
+            getUsers
         }
     )
 } 
