@@ -9,13 +9,13 @@ const initialUsers = [];
   const initialUserForm = 
       {
           id: 0,
-          userName: '',
+          username: '',
           password: '',
           email: '',
       }
   const initialErrors = 
       {
-          userName: '',
+          username: '',
           password: '',
           email: '',
       }      
@@ -83,7 +83,16 @@ export const UseUsers = () => {
       } catch (error) {
           if (error.response && error.response.status == 400) {
             setErrors(error.response.data);
-        console.log(error.response.data);
+
+          } else if (error.response && error.response.status == 500) {
+
+              if (error.response.data?.message?.includes('UK_username')) {
+                setErrors({username: 'El username ya existe'});
+              }
+
+              if (error.response.data?.message?.includes('UK_email')) {
+                setErrors({email: 'El email ya existe'});
+              } 
 
           } else {
             throw error;

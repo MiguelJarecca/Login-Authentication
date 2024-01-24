@@ -22,7 +22,7 @@ export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
                         <UserRow 
                             key = {user.id}
                             id = {user.id}
-                            userName = {user.userName}
+                            username = {user.username}
                             email = {user.email}
                             handleDeleteUser = {handleDeleteUser}
                             handleSelectUser= {handleSelectUser}

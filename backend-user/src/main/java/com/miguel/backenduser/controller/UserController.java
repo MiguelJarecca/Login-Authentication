@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.miguel.backenduser.models.entities.User;
+import com.miguel.backenduser.models.request.UserRequest;
 import com.miguel.backenduser.services.UserService;
 
 import jakarta.validation.Valid;
@@ -59,7 +60,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@Valid @RequestBody User user, BindingResult result, @PathVariable Long id) {
+    public ResponseEntity<?> update(@Valid @RequestBody UserRequest  user, BindingResult result, @PathVariable Long id) {
         
         if (result.hasErrors()) {
             return validation(result);

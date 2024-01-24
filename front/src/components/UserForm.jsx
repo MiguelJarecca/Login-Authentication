@@ -2,12 +2,12 @@ import { useContext, useEffect, useState } from "react";
 // import Swal from "sweetalert2";
 import { UserContext } from "../context/UserContext";
 
-export const UserForm = ( {userSelect, handleCloseForm, errors}) => {
+export const UserForm = ( {userSelect, handleCloseForm}) => {
 
-    const {initialUserForm, handleAddUser} = useContext(UserContext);
+    const {initialUserForm, handleAddUser, errors} = useContext(UserContext);
 
     const [userForm, setUserForm] = useState(initialUserForm);
-    const {id, userName, password, email} = userForm;
+    const {id, username, password, email} = userForm;
 
     useEffect (() => {
         setUserForm({...userSelect});
@@ -24,7 +24,7 @@ export const UserForm = ( {userSelect, handleCloseForm, errors}) => {
     const onSubmitForm = (event) =>  {
         //Evita que se recargue la pagina cuando enviamos el form
         event.preventDefault();
-        // if (!userName || (!password && id === 0) || !email) {
+        // if (!username || (!password && id === 0) || !email) {
 
         //     Swal.fire({
         //         title: "Error de validacion!",
@@ -41,7 +41,6 @@ export const UserForm = ( {userSelect, handleCloseForm, errors}) => {
         handleCloseForm();
         setUserForm(initialUserForm);
     }
-    console.log('control', errors?.username);
 
     return (
         <div>
@@ -49,8 +48,8 @@ export const UserForm = ( {userSelect, handleCloseForm, errors}) => {
                 <input 
                     type="text" 
                     placeholder="nombre"
-                    name="userName"
-                    value={userName}
+                    name="username"
+                    value={username}
                     onChange={onInputChange}
                 />
                 <p>{errors?.username}</p>
@@ -62,7 +61,7 @@ export const UserForm = ( {userSelect, handleCloseForm, errors}) => {
                     value={password}
                     onChange={onInputChange}
                 /> }
-                <p>hola {errors?.password}</p>
+                <p>{errors?.password}</p>
                 
                 <input 
                     type="email" 

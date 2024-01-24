@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-export const UserRow = ({ handleDeleteUser, handleSelectUser, id, userName, email }) => {
+export const UserRow = ({ handleDeleteUser, handleSelectUser, id, username, email }) => {
 
     const onDeleteUser = (id) => {
         handleDeleteUser(id);
@@ -14,12 +14,12 @@ export const UserRow = ({ handleDeleteUser, handleSelectUser, id, userName, emai
         
              <tr>
                 <td>{id}</td>
-                <td>{userName}</td>
+                <td>{username}</td>
                 <td>{email}</td>
                 <td>
                     <button
                         type="button"
-                        onClick={() => onSelectetUser({id, userName, email})}
+                        onClick={() => onSelectetUser({id, username, email})}
                         >
                         Actualizar    
                     </button>
