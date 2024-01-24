@@ -13,6 +13,12 @@ const initialUsers = [];
           password: '',
           email: '',
       }
+  const initialErrors = 
+      {
+          userName: '',
+          password: '',
+          email: '',
+      }      
   
 export const UseUsers = () => {
 
@@ -20,6 +26,7 @@ export const UseUsers = () => {
     const [userSelect, setUserSelect] = useState(initialUserForm);
     const [visibleForm, setVisibleForm] = useState(false);
 
+    const [errors, setErrors] = useState(initialErrors);
     const navigate = useNavigate();
 
     //comunicacion con el userService-backend-traer todos los usarios
@@ -40,36 +47,48 @@ export const UseUsers = () => {
       let type;
       let response;
 
-      if (user.id === 0) {
-        response = await save(user);
-      } else {
-        response = await update(user);
-      }
-  
+      try {
+
         if (user.id === 0) {
-          type='addUser'
+          response = await save(user);
         } else {
-          type='updateUser'
+          response = await update(user);
         }
-  
-      dispach({
-        type: type,
-        payload: response.data,
-      });
+    
+          if (user.id === 0) {
+            type='addUser'
+          } else {
+            type='updateUser'
+          }
+    
+        dispach({
+          type: type,
+          payload: response.data,
+        });
 
-      Swal.fire({
-        title: (user.id === 0) 
-            ? "Usuario Creado"
-            : "Usuario Actualizado",
-        text: (user.id === 0)
-            ? "El usuario ha sido creado con exito!"
-            : "El usuario ha sido actualizado con exito",
-        icon: "success"
-      });
+        Swal.fire({
+          title: (user.id === 0) 
+              ? "Usuario Creado"
+              : "Usuario Actualizado",
+          text: (user.id === 0)
+              ? "El usuario ha sido creado con exito!"
+              : "El usuario ha sido actualizado con exito",
+          icon: "success"
+        });
 
-      setVisibleForm(false);
-      setUserSelect(initialUserForm);
-      navigate('/users');
+        setVisibleForm(false);
+        setUserSelect(initialUserForm);
+        navigate('/users');
+
+      } catch (error) {
+          if (error.response && error.response.status == 400) {
+            setErrors(error.response.data);
+        console.log(error.response.data);
+
+          } else {
+            throw error;
+          }
+      }
     };
   
     //comunicacion con el userService-backend-eliminar usuario
@@ -116,6 +135,8 @@ export const UseUsers = () => {
     const handleCloseForm = () => {
         setVisibleForm(false);
         setUserSelect(initialUserForm);
+        //Limpiamos los errores de errors
+        setErrors({});
     }
 
     return (
@@ -124,13 +145,14 @@ export const UseUsers = () => {
             userSelect,
             initialUserForm,
             visibleForm,
+            errors,
 
             handleAddUser,
             handleDeleteUser,
             handleSelectUser,
             handleOpenForm,
             handleCloseForm,
-            getUsers
+            getUsers,
         }
     )
 } 

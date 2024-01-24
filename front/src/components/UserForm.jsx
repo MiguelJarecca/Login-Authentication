@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { UserContext } from "../context/UserContext";
 
-export const UserForm = ( {userSelect, handleCloseForm}) => {
+export const UserForm = ( {userSelect, handleCloseForm, errors}) => {
 
     const {initialUserForm, handleAddUser} = useContext(UserContext);
 
@@ -24,26 +24,24 @@ export const UserForm = ( {userSelect, handleCloseForm}) => {
     const onSubmitForm = (event) =>  {
         //Evita que se recargue la pagina cuando enviamos el form
         event.preventDefault();
-        if (!userName || (!password && id === 0) || !email) {
+        // if (!userName || (!password && id === 0) || !email) {
 
-            Swal.fire({
-                title: "Error de validacion!",
-                text: "Completar el formulario.",
-                icon: "error"
-              });
-            return;
-        }
+        //     Swal.fire({
+        //         title: "Error de validacion!",
+        //         text: "Completar el formulario.",
+        //         icon: "error"
+        //       });
+        //     return;
+        // }
 
         handleAddUser(userForm);
-
-        //Cuando enviamos los datos limpiamos los valores
-        setUserForm(initialUserForm);
     }
 
     const onCloseForm = () => {
         handleCloseForm();
         setUserForm(initialUserForm);
     }
+    console.log('control', errors?.username);
 
     return (
         <div>
@@ -55,6 +53,8 @@ export const UserForm = ( {userSelect, handleCloseForm}) => {
                     value={userName}
                     onChange={onInputChange}
                 />
+                <p>{errors?.username}</p>
+
                 {id > 0 ? '' : <input 
                     type="password" 
                     placeholder="contraseña"
@@ -62,6 +62,7 @@ export const UserForm = ( {userSelect, handleCloseForm}) => {
                     value={password}
                     onChange={onInputChange}
                 /> }
+                <p>hola {errors?.password}</p>
                 
                 <input 
                     type="email" 
@@ -70,6 +71,8 @@ export const UserForm = ( {userSelect, handleCloseForm}) => {
                     value={email}
                     onChange={onInputChange}
                 />
+                <p>{errors?.email}</p>
+
                 <input
                     type="hidden"
                     name="id"
