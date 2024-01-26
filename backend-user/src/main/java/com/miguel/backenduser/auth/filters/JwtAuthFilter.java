@@ -1,5 +1,9 @@
 package com.miguel.backenduser.auth.filters;
 
+import static com.miguel.backenduser.auth.constants.TokenJwtConfig.HEADER_AUTHORIZATION;
+import static com.miguel.backenduser.auth.constants.TokenJwtConfig.PREFIX_TOKEN;
+import static com.miguel.backenduser.auth.constants.TokenJwtConfig.SECRET_KEY;
+
 import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
@@ -66,11 +70,12 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
             String username = ((org.springframework.security.core.userdetails.User) 
                 authResult.getPrincipal()).getUsername();    
             
-            String originalInput = "algun_token_con _frase." + username;  
+            String originalInput = SECRET_KEY +":"+ username; 
+            System.out.println("control " + originalInput);
             
             String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
 
-            response.addHeader("Authorization", "Bearer " +token);
+            response.addHeader(HEADER_AUTHORIZATION, PREFIX_TOKEN +token);
 
             Map<String, Object> body = new HashMap<>();
             body.put("token", token);
