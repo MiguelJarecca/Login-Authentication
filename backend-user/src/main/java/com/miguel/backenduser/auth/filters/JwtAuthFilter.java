@@ -2,10 +2,11 @@ package com.miguel.backenduser.auth.filters;
 
 import static com.miguel.backenduser.auth.constants.TokenJwtConfig.HEADER_AUTHORIZATION;
 import static com.miguel.backenduser.auth.constants.TokenJwtConfig.PREFIX_TOKEN;
-import static com.miguel.backenduser.auth.constants.TokenJwtConfig.SECRET_KEY;
+import com.miguel.backenduser.auth.constants.TokenJwtConfig;
+
 
 import java.io.IOException;
-import java.util.Base64;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miguel.backenduser.models.entities.User;
 
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -70,10 +72,15 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
             String username = ((org.springframework.security.core.userdetails.User) 
                 authResult.getPrincipal()).getUsername();    
             
-            String originalInput = SECRET_KEY +":"+ username; 
-            System.out.println("control " + originalInput);
-            
-            String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
+            // String originalInput = SECRET_KEY +":"+ username;             
+            // String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
+
+            String token = Jwts.builder()
+                    .subject(username)
+                    .signWith(new TokenJwtConfig().SECRET_KEY)
+                    .issuedAt(new Date())
+                    .expiration(new Date(System.currentTimeMillis() + 3600000))
+                    .compact();    
 
             response.addHeader(HEADER_AUTHORIZATION, PREFIX_TOKEN +token);
 

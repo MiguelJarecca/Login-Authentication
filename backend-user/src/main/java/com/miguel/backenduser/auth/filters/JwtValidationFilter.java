@@ -1,10 +1,10 @@
 package com.miguel.backenduser.auth.filters;
 
 import static com.miguel.backenduser.auth.constants.TokenJwtConfig.*;
+import com.miguel.backenduser.auth.constants.TokenJwtConfig;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +18,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,15 +44,21 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
         }
 
         String token = header.replace(PREFIX_TOKEN, "");
-        byte[] tokenDecodeBytes = Base64.getDecoder().decode(token);
-        String tokenDecode = new String (tokenDecodeBytes);
+        System.out.println("control 01 "+ token);
+        Claims claims = null;
+        try {
 
-        String[] tokenArr = tokenDecode.split(":");
-        System.out.println("control 2 " +tokenArr); 
-        String secret = tokenArr[0];
-        String username = tokenArr[1];
+            claims = Jwts
+                .parser()
+                .verifyWith(new TokenJwtConfig().SECRET_KEY)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
 
-        if (SECRET_KEY.equals(secret)) {
+            System.out.println("control 44444"); 
+            System.out.println("control 55 " +claims);   
+            String username = claims.getSubject();
+            System.out.println("control 02 " +username);
 
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
@@ -59,16 +68,17 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request, response);
-        } else {
-            
+
+        } catch (JwtException ex) {
+
             Map<String, String> body = new HashMap<>();
             body.put("message", "El token JWT no es vaido!");
 
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));
             response.setStatus(403);
             response.setContentType("application/json");
-
         }
+
     }
 
 }
