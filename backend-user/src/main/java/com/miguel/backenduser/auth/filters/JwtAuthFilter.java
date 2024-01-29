@@ -1,10 +1,5 @@
 package com.miguel.backenduser.auth.filters;
 
-import static com.miguel.backenduser.auth.constants.TokenJwtConfig.HEADER_AUTHORIZATION;
-import static com.miguel.backenduser.auth.constants.TokenJwtConfig.PREFIX_TOKEN;
-import com.miguel.backenduser.auth.constants.TokenJwtConfig;
-
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.miguel.backenduser.auth.constants.TokenJwtConfig;
 import com.miguel.backenduser.models.entities.User;
 
 import io.jsonwebtoken.Jwts;
@@ -27,7 +23,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter implements TokenJwtConfig{
 
     private AuthenticationManager authenticationManager;
 
@@ -70,14 +66,15 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
             Authentication authResult) throws IOException, ServletException {
             
             String username = ((org.springframework.security.core.userdetails.User) 
-                authResult.getPrincipal()).getUsername();    
+                authResult.getPrincipal()).getUsername();      
             
             // String originalInput = SECRET_KEY +":"+ username;             
             // String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
 
+            //Creamos el token jws
             String token = Jwts.builder()
                     .subject(username)
-                    .signWith(new TokenJwtConfig().SECRET_KEY)
+                    .signWith(SECRET_KEY)
                     .issuedAt(new Date())
                     .expiration(new Date(System.currentTimeMillis() + 3600000))
                     .compact();    

@@ -1,6 +1,5 @@
 package com.miguel.backenduser.auth.filters;
 
-import static com.miguel.backenduser.auth.constants.TokenJwtConfig.*;
 import com.miguel.backenduser.auth.constants.TokenJwtConfig;
 
 import java.io.IOException;
@@ -19,6 +18,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
@@ -26,7 +26,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class JwtValidationFilter extends BasicAuthenticationFilter {
+public class JwtValidationFilter extends BasicAuthenticationFilter implements TokenJwtConfig {
 
     public JwtValidationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
@@ -45,20 +45,19 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
 
         String token = header.replace(PREFIX_TOKEN, "");
         System.out.println("control 01 "+ token);
-        Claims claims = null;
+        System.out.println("control 01 "+ SECRET_KEY);
+        
+        //Validamos el token jws
+        Jws<Claims> jws;
         try {
 
-            claims = Jwts
+            jws = Jwts
                 .parser()
-                .verifyWith(new TokenJwtConfig().SECRET_KEY)
+                .verifyWith(SECRET_KEY)
                 .build()
-                .parseSignedClaims(token)
-                .getPayload();
+                .parseSignedClaims(token);
 
-            System.out.println("control 44444"); 
-            System.out.println("control 55 " +claims);   
-            String username = claims.getSubject();
-            System.out.println("control 02 " +username);
+            String username = jws.toString() ;
 
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));

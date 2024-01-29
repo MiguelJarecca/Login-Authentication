@@ -4,7 +4,7 @@ import javax.crypto.SecretKey;
 
 import io.jsonwebtoken.Jwts;
 
-public class TokenJwtConfig {
+public interface TokenJwtConfig {
 
     SecretKey key = Jwts.SIG.HS256.key().build();
 
