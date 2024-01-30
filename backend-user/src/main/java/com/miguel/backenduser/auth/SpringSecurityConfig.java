@@ -38,8 +38,10 @@ public class SpringSecurityConfig {
             .requestMatchers(HttpMethod.GET, "/users").permitAll()
             .anyRequest().authenticated())
 
-            .addFilter(new JwtAuthFilter(authenticationConfiguration.getAuthenticationManager()))
-            .addFilter(new JwtValidationFilter(authenticationConfiguration.getAuthenticationManager()))
+            .addFilter(new JwtAuthFilter(authenticationConfiguration
+                .getAuthenticationManager()))
+            .addFilter(new JwtValidationFilter(authenticationConfiguration
+                .getAuthenticationManager()))
 
             .csrf(config -> config.disable())
             .sessionManagement(managment -> 

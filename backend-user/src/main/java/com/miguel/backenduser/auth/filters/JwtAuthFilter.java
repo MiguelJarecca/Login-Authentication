@@ -32,8 +32,8 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter implemen
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request, 
+            HttpServletResponse response) throws AuthenticationException {
 
             User user = null;
             String username = null;
@@ -43,10 +43,9 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter implemen
                 user = new ObjectMapper().readValue(request.getInputStream(), User.class);
                 username = user.getUsername();
                 password = user.getPassword();
-
-                logger.info("Username desde request InputStream (raw) " +username);
-                logger.info("Password desde request InputStream (raw) " +password);
             
+                System.out.println("control 01 intentando iniciar");
+
             } catch (StreamReadException e) {
                 e.printStackTrace();
             } catch (DatabindException e) {
@@ -55,7 +54,10 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter implemen
                 e.printStackTrace();
             }
 
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+            UsernamePasswordAuthenticationToken authToken = new 
+            UsernamePasswordAuthenticationToken(username, password);
+
+            System.out.println("control 02 que es esto: " +authToken);
 
         return authenticationManager.authenticate(authToken);
     }
@@ -65,11 +67,12 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter implemen
             HttpServletResponse response, FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
             
+            //Se va a JpaUserDetailsService regresa con los authorities     
             String username = ((org.springframework.security.core.userdetails.User) 
-                authResult.getPrincipal()).getUsername();      
-            
-            // String originalInput = SECRET_KEY +":"+ username;             
-            // String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
+                authResult.getPrincipal()).getUsername();
+
+            System.out.println("control 03 auntenticacion : " );
+          
 
             //Creamos el token jws
             String token = Jwts.builder()
@@ -81,9 +84,13 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter implemen
 
             response.addHeader(HEADER_AUTHORIZATION, PREFIX_TOKEN +token);
 
+            System.out.println("control 04 que es esto del response: " +response);
+
             Map<String, Object> body = new HashMap<>();
             body.put("token", token);
-            body.put("message", String.format("Hola %s has iniciado sesion con exito", username));
+            body.put("message", String.format(
+                    "Hola %s has iniciado sesion con exito", 
+                    username));
             body.put("username", username);
 
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));

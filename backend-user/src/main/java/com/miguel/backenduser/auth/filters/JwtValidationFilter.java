@@ -33,10 +33,13 @@ public class JwtValidationFilter extends BasicAuthenticationFilter implements To
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest request, 
+            HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
         String header = request.getHeader(HEADER_AUTHORIZATION);
+
+        System.out.println("control 05 que hay en el header: " +header);
 
         if (header == null || !header.startsWith(PREFIX_TOKEN) ) {
             chain.doFilter(request, response);
@@ -44,9 +47,7 @@ public class JwtValidationFilter extends BasicAuthenticationFilter implements To
         }
 
         String token = header.replace(PREFIX_TOKEN, "");
-        System.out.println("control 01 "+ token);
-        System.out.println("control 01 "+ SECRET_KEY);
-        
+
         //Validamos el token jws
         Jws<Claims> jws;
         try {
@@ -58,6 +59,8 @@ public class JwtValidationFilter extends BasicAuthenticationFilter implements To
                 .parseSignedClaims(token);
 
             String username = jws.toString() ;
+
+            System.out.println("control 06 validacion: " );
 
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
