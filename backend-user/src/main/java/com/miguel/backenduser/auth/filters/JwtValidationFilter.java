@@ -57,15 +57,15 @@ public class JwtValidationFilter extends BasicAuthenticationFilter implements To
                 .verifyWith(SECRET_KEY)
                 .build()
                 .parseSignedClaims(token);
-
+         
             String username = jws.toString();
 
-            System.out.println("control 06 validacion: " );
-
-            Object authoritiesClaims = jws.getPayload().get("athorities");
+            Object authoritiesClaims = jws.getPayload().get("authorities", Object.class);
+            System.out.println("mirando que tiene el authoritiesClamis " +authoritiesClaims);
 
             Collection<? extends GrantedAuthority> authorities = Arrays
             .asList(new ObjectMapper()
+            .addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityJsonCreator.class)
                 .readValue(authoritiesClaims.toString().getBytes(), SimpleGrantedAuthority[].class));
 
             UsernamePasswordAuthenticationToken authentication = 

@@ -73,7 +73,9 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter implemen
             String username = ((org.springframework.security.core.userdetails.User) 
                 authResult.getPrincipal()).getUsername();
 
-            Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();    
+            Collection<? extends GrantedAuthority> roles = authResult.getAuthorities(); 
+            
+            
 
             System.out.println("control 03 auntenticacion : " +roles);
 
@@ -81,7 +83,8 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter implemen
 
             //Creamos el token jws
             String token = Jwts.builder()
-                    .claim("authorities", roles)
+                    //new ObjectMapper convertimos a json
+                    .claim("authorities", new ObjectMapper().writeValueAsString(roles))
                     .claim("isAdmin", isAdmin)
                     .subject(username)
                     .signWith(SECRET_KEY)
