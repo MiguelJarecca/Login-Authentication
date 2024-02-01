@@ -3,18 +3,19 @@ package com.miguel.backenduser.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.miguel.backenduser.models.dto.UserDto;
 import com.miguel.backenduser.models.entities.User;
 import com.miguel.backenduser.models.request.UserRequest;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<UserDto> findAll();
 
-    Optional<User> findById(Long id);
+    Optional<UserDto> findById(Long id);
 
-    Optional<User> update(UserRequest user, Long id);
+    Optional<UserDto> update(UserRequest user, Long id);
 
-    User save(User user);
+    UserDto save(User user);
 
     void remove(Long id);
     

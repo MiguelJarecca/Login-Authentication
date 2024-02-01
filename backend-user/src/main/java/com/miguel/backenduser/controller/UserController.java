@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.miguel.backenduser.models.dto.UserDto;
 import com.miguel.backenduser.models.entities.User;
 import com.miguel.backenduser.models.request.UserRequest;
 import com.miguel.backenduser.services.UserService;
@@ -34,13 +35,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> list() {
-        return (List<User>) userService.findAll();
+    public List<UserDto> list() {
+        return (List<UserDto>) userService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(@PathVariable Long id) {
-        Optional<User> userOptional = userService.findById(id);
+        Optional<UserDto> userOptional = userService.findById(id);
 
         if (userOptional.isPresent()) {
             return ResponseEntity.ok(userOptional.orElseThrow());
@@ -55,7 +56,7 @@ public class UserController {
             return validation(result);
         }
         
-        User userDb = userService.save(user);
+        UserDto userDb = userService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(userDb);
     }
 
@@ -66,7 +67,7 @@ public class UserController {
             return validation(result);
         }
         
-        Optional<User> o = userService.update(user, id);
+        Optional<UserDto> o = userService.update(user, id);
         if (o.isPresent()) {
             
             return ResponseEntity.status(HttpStatus.CREATED).body(o.orElseThrow());
@@ -77,7 +78,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> remove(@PathVariable Long id) {
-        Optional<User> o = userService.findById(id);
+        Optional<UserDto> o = userService.findById(id);
         if (o.isPresent()) {
             userService.remove(id);
             return ResponseEntity.noContent().build(); // error 204
