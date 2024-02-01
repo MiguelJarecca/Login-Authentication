@@ -15,13 +15,14 @@ export const UseAuth = () => {
   const [login, dispatch] = useReducer(LoginReducer, initialLogin);
   const navigate = useNavigate();
 
-  const handleLogin = ({username, password}) => {
+  const handleLogin = async({username, password}) => {
 
-    const isAuth = AuthService({username, password});
 
-      if (isAuth) {
+      try {
+        const response = await AuthService({username, password});
+        const token = response.data.token;
 
-        const user = {username:'admin'};
+        const user = {username: response.data.username};
         dispatch({
           type:'login',
           payload: user,
@@ -34,7 +35,7 @@ export const UseAuth = () => {
 
         navigate('/users');
 
-      }else{
+      }catch(error){
         Swal.fire('Error login', 'username o password invalidos', 'error');
       }
     }

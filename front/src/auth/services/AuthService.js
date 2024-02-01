@@ -1,8 +1,15 @@
 
+import axios from 'axios';
 
-export const AuthService = (userLogin) => {
+export const AuthService = async({ username, password }) => {
   
-    //Retorna verdadero o falso
-    return (userLogin.username === 'admin' && userLogin.password === '123456');
+    try {
+        return await axios.post('http://localhost:8080/login', {
+            username,
+            password,
+        });
+    } catch (error) {
+        throw error;
+    }
     
 }
