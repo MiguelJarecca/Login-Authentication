@@ -3,9 +3,9 @@ package com.miguel.backenduser.auth.filters;
 import com.miguel.backenduser.auth.constants.TokenJwtConfig;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -58,12 +58,15 @@ public class JwtValidationFilter extends BasicAuthenticationFilter implements To
                 .build()
                 .parseSignedClaims(token);
 
-            String username = jws.toString() ;
+            String username = jws.toString();
 
             System.out.println("control 06 validacion: " );
 
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+            Object authoritiesClaims = jws.getPayload().get("athorities");
+
+            Collection<? extends GrantedAuthority> authorities = Arrays
+            .asList(new ObjectMapper()
+                .readValue(authoritiesClaims.toString().getBytes(), SimpleGrantedAuthority[].class));
 
             UsernamePasswordAuthenticationToken authentication = 
             new UsernamePasswordAuthenticationToken(username, null, authorities);

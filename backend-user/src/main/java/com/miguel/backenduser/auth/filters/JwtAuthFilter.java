@@ -1,6 +1,7 @@
 package com.miguel.backenduser.auth.filters;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
@@ -71,11 +73,16 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter implemen
             String username = ((org.springframework.security.core.userdetails.User) 
                 authResult.getPrincipal()).getUsername();
 
-            System.out.println("control 03 auntenticacion : " );
-          
+            Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();    
+
+            System.out.println("control 03 auntenticacion : " +roles);
+
+            boolean isAdmin = roles.stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
 
             //Creamos el token jws
             String token = Jwts.builder()
+                    .claim("authorities", roles)
+                    .claim("isAdmin", isAdmin)
                     .subject(username)
                     .signWith(SECRET_KEY)
                     .issuedAt(new Date())
