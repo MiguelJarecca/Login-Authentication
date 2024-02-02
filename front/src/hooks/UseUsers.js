@@ -1,8 +1,9 @@
-import { useReducer, useState } from "react";
+import { useContext, useReducer, useState } from "react";
 import { UsersReducer } from "../reducers/UsersReducer";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { findAll, remove, save, update } from "../services/UserService";
+import { AuthContext } from './../auth/context/AuthContext';
 
 const initialUsers = [];
   
@@ -29,6 +30,8 @@ export const UseUsers = () => {
     const [errors, setErrors] = useState(initialErrors);
     const navigate = useNavigate();
 
+    const { login } = useContext(AuthContext);
+
     //comunicacion con el userService-backend-traer todos los usarios
     const getUsers = async() => {
 
@@ -43,7 +46,10 @@ export const UseUsers = () => {
 
     //comunicacion con el userService-backend-guardar o actualizar usuario
     const handleAddUser = async(user) => {
-  
+
+      //opcional
+      if (!login.isAdmin) return;
+        
       let type;
       let response;
 
@@ -93,7 +99,8 @@ export const UseUsers = () => {
               if (error.response.data?.message?.includes('UK_email')) {
                 setErrors({email: 'El email ya existe'});
               } 
-
+          } else if (error.response?.status == 401) {
+            
           } else {
             throw error;
           }
@@ -102,6 +109,8 @@ export const UseUsers = () => {
   
     //comunicacion con el userService-backend-eliminar usuario
     const handleDeleteUser = (id) => {
+
+      if (!login.isAdmin) return;
 
       Swal.fire({
         title: "Estas seguro que deseas eliminar?",

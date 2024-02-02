@@ -80,7 +80,7 @@ public class JwtValidationFilter extends BasicAuthenticationFilter implements To
             body.put("message", "El token JWT no es vaido!");
 
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));
-            response.setStatus(403);
+            response.setStatus(401);
             response.setContentType("application/json");
         }
 

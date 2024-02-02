@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { UserForm } from "../components/UserForm";
 import { UserList } from "../components/UsersList";
 import { UserContext } from "../context/UserContext";
+import { AuthContext } from './../auth/context/AuthContext';
 
 export const UsersPage = () => {
 
@@ -15,6 +16,8 @@ export const UsersPage = () => {
     handleCloseForm,
     getUsers,
     } = useContext(UserContext);
+ 
+    const { login } = useContext(AuthContext);
 
     useEffect(() => {
       getUsers();
@@ -30,7 +33,7 @@ export const UsersPage = () => {
               handleCloseForm={handleCloseForm}
             />}   
             
-            {visibleForm || <button
+            {(visibleForm || !login.isAdmin) || <button
               onClick={handleOpenForm}>
               Nuevo usuario
               </button> }
