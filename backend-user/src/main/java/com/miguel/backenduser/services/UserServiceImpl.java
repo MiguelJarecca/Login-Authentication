@@ -63,13 +63,21 @@ public class UserServiceImpl implements UserService{
         String passwordBCrypt = passwordEncoder.encode(user.getPassword());
         user.setPassword(passwordBCrypt);
 
-        Optional<Role> o = roleRepository.findByName("ROLE_USER");
+        Optional<Role> oUser = roleRepository.findByName("ROLE_USER");
 
         List<Role> roles = new ArrayList<>();
 
-        if (o.isPresent()) {
-            roles.add(o.orElseThrow());
+        if (oUser.isPresent()) {
+            roles.add(oUser.orElseThrow());
         }
+
+        if (user.isAdmin()) {
+            Optional<Role> oAdmin = roleRepository.findByName("ROLE_ADMIN");
+            if (oAdmin.isPresent()) {
+                roles.add(oAdmin.orElseThrow());
+            }
+        }
+
         user.setRoles(roles);
 
         return DtoMapperUser.builder().setUser(userRepository.save(user)).build();
@@ -83,7 +91,24 @@ public class UserServiceImpl implements UserService{
         User userOptional = null;
 
         if (o.isPresent()) {
+
+            Optional<Role> oUser = roleRepository.findByName("ROLE_USER");
+
+            List<Role> roles = new ArrayList<>();
+
+            if (oUser.isPresent()) {
+                roles.add(oUser.orElseThrow());
+            }
+
+            if (user.isAdmin()) {
+                Optional<Role> oAdmin = roleRepository.findByName("ROLE_ADMIN");
+                if (oAdmin.isPresent()) {
+                    roles.add(oAdmin.orElseThrow());
+                }
+            }
+
             User userDb = o.orElseThrow();
+            userDb.setRoles(roles);
             userDb.setUsername(user.getUsername());
             userDb.setEmail(user.getEmail());
             userOptional = userRepository.save(userDb);

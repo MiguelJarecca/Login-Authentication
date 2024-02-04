@@ -13,6 +13,7 @@ const initialUsers = [];
           username: '',
           password: '',
           email: '',
+          admin: false,
       }
   const initialErrors = 
       {
@@ -30,7 +31,7 @@ export const UseUsers = () => {
     const [errors, setErrors] = useState(initialErrors);
     const navigate = useNavigate();
 
-    const { login } = useContext(AuthContext);
+    const { login, handleLogout } = useContext(AuthContext);
 
     //comunicacion con el userService-backend-traer todos los usarios
     const getUsers = async() => {
@@ -100,7 +101,8 @@ export const UseUsers = () => {
                 setErrors({email: 'El email ya existe'});
               } 
           } else if (error.response?.status == 401) {
-            
+            //es para cerrar sesion
+            handleLogout();
           } else {
             throw error;
           }
@@ -110,6 +112,7 @@ export const UseUsers = () => {
     //comunicacion con el userService-backend-eliminar usuario
     const handleDeleteUser = (id) => {
 
+      //Si no es Admin el user regresara con el return
       if (!login.isAdmin) return;
 
       Swal.fire({
@@ -121,21 +124,29 @@ export const UseUsers = () => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Si, Eliminar!"
 
-      }).then((result) => {
+      }).then(async(result) => {
+
         if (result.isConfirmed) {
 
-          remove(id);
+          try {
+            await remove(id);
 
             dispach({
                 type: 'deleteUser',
                 payload: id,
               });
 
-          Swal.fire({
-            title: "Eliminar!",
-            text: "El usuario ha sido eliminado con exito.",
-            icon: "success"
-          });
+            Swal.fire({
+              title: "Eliminar!",
+              text: "El usuario ha sido eliminado con exito.",
+              icon: "success"
+            });
+        
+          } catch (error) {
+            if (error.response?.status == 401) {
+              handleLogout();
+            }
+          }
         }
       });
     };

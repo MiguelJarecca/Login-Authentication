@@ -31,6 +31,7 @@ export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
                             id = {user.id}
                             username = {user.username}
                             email = {user.email}
+                            admin = {user.admin}
                             handleDeleteUser = {handleDeleteUser}
                             handleSelectUser= {handleSelectUser}
                         />
