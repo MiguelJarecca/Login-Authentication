@@ -4,31 +4,20 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { findAll, remove, save, update } from "../services/UserService";
 import { AuthContext } from './../auth/context/AuthContext';
-
-const initialUsers = [];
-  
-  const initialUserForm = 
-      {
-          id: 0,
-          username: '',
-          password: '',
-          email: '',
-          admin: false,
-      }
-  const initialErrors = 
-      {
-          username: '',
-          password: '',
-          email: '',
-      }      
+import { useDispatch } from "redux"
+import { useSelector } from "redux"
+import { addUser, loadingUser, onCloseForm, onOpenForm, onUserSelectedForm, removeUser, updateUser } from "../store/slices/users/usersSlice";
+import { initialUserForm } from './../store/slices/users/usersSlice';  
   
 export const UseUsers = () => {
 
-    const [users, dispach] = useReducer(UsersReducer, initialUsers);
-    const [userSelect, setUserSelect] = useState(initialUserForm);
-    const [visibleForm, setVisibleForm] = useState(false);
+    // const [users, dispach] = useReducer(UsersReducer, initialUsers);
+    const {users, userSelect, visibleForm, errors} = useSelector(state => state.users);
+    const dispatch = useDispatch(); 
+    // const [userSelect, setUserSelect] = useState(initialUserForm);
+    // const [visibleForm, setVisibleForm] = useState(false);
 
-    const [errors, setErrors] = useState(initialErrors);
+    // const [errors, setErrors] = useState(initialErrors);
     const navigate = useNavigate();
 
     const { login, handleLogout } = useContext(AuthContext);
@@ -36,12 +25,15 @@ export const UseUsers = () => {
     //comunicacion con el userService-backend-traer todos los usarios
     const getUsers = async() => {
 
-      const result = await findAll();
-
-      dispach({
-        type: 'loadingUsers',
-        payload: result.data
-      });
+      try {
+        const result = await findAll();
+        console.log(result);
+        dispatch(loadingUser(result.data));
+      } catch (error) {
+        if (error.response?.status == 401) {
+          handleLogout();
+        }
+      }
 
     };
 
@@ -51,27 +43,17 @@ export const UseUsers = () => {
       //opcional
       if (!login.isAdmin) return;
         
-      let type;
       let response;
 
       try {
 
         if (user.id === 0) {
           response = await save(user);
+          dispatch(addUser(response.data));
         } else {
           response = await update(user);
+          dispatch(updateUser(response.data));
         }
-    
-          if (user.id === 0) {
-            type='addUser'
-          } else {
-            type='updateUser'
-          }
-    
-        dispach({
-          type: type,
-          payload: response.data,
-        });
 
         Swal.fire({
           title: (user.id === 0) 
@@ -130,12 +112,8 @@ export const UseUsers = () => {
 
           try {
             await remove(id);
-
-            dispach({
-                type: 'deleteUser',
-                payload: id,
-              });
-
+            dispatch(removeUser(id));
+            
             Swal.fire({
               title: "Eliminar!",
               text: "El usuario ha sido eliminado con exito.",
@@ -152,19 +130,21 @@ export const UseUsers = () => {
     };
   
     const handleSelectUser = (user) => {
-        setVisibleForm(true);
+        // setVisibleForm(true);
       //creamos un clon de user con el ...
-      setUserSelect({...user});
+      // setUserSelect({...user});
+      dispatch(onUserSelectedForm({...user}));
     }
 
     const handleOpenForm = () => {
-        setVisibleForm(true);
+        dispatch(onOpenForm());
     }
 
     const handleCloseForm = () => {
-        setVisibleForm(false);
-        setUserSelect(initialUserForm);
+        // setVisibleForm(false);
+        // setUserSelect(initialUserForm);
         //Limpiamos los errores de errors
+        dispatch(onCloseForm());
         setErrors({});
     }
 
