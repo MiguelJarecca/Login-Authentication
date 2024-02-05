@@ -1,19 +1,16 @@
-import { useReducer } from "react";
-import { LoginReducer } from "../reducers/LoginReducer";
 import { AuthService } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 
 import Swal from "sweetalert2";
-
-const initialLogin = JSON.parse(sessionStorage.getItem('login')) || {
-    isAuth:false,
-    isAdmin: false,
-    user: undefined,
-  };
+import { onLogin, onLogout } from "../../store/slices/auth/authSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 export const UseAuth = () => {
 
-  const [login, dispatch] = useReducer(LoginReducer, initialLogin);
+  // const [login, dispatch] = useReducer(LoginReducer, initialLogin);
+  const dispatch = useDispatch();
+  const {user, isAdmin, isAuth} = useSelector(state => state.auth);
+
   const navigate = useNavigate();
 
   const handleLogin = async({username, password}) => {
@@ -22,17 +19,14 @@ export const UseAuth = () => {
       try {
         const response = await AuthService({username, password});
         const token = response.data.token;
-        console.log("mirando el token ", token);
+        // console.log("mirando el token ", token);
 
         const claims = JSON.parse(window.atob(token.split(".")[1]));
-        console.log("mirando los claims ", claims);
+        // console.log("mirando los claims ", claims);
 
         const user = {username: response.data.username};
 
-        dispatch({
-          type:'login',
-          payload: {user, isAdmin: claims.isAdmin},
-        });
+        dispatch(onLogin({user, isAdmin: claims.isAdmin}));
 
         sessionStorage.setItem('login', JSON.stringify({
             isAuth: true,
@@ -57,16 +51,19 @@ export const UseAuth = () => {
     }
 
     const handleLogout = () => {
-      dispatch({
-        type:'logout',
-      });
+      dispatch(onLogout());
+
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('login');
       sessionStorage.clear();
     };
 
   return {
-        login,
+        login: {
+          user,
+          isAdmin,
+          isAuth,
+        },
         handleLogin,
         handleLogout,
     }

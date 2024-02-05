@@ -1,8 +1,8 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { UserForm } from "../components/UserForm";
 import { UserList } from "../components/UsersList";
-import { UserContext } from "../context/UserContext";
-import { AuthContext } from './../auth/context/AuthContext';
+import { UseUsers } from "../hooks/UseUsers";
+import { UseAuth } from "../auth/hooks/UseAuth";
 
 export const UsersPage = () => {
 
@@ -15,13 +15,13 @@ export const UsersPage = () => {
     handleOpenForm,
     handleCloseForm,
     getUsers,
-    } = useContext(UserContext);
+    } = UseUsers();
  
-    const { login } = useContext(AuthContext);
+    const { login } = UseAuth();
 
     useEffect(() => {
       getUsers();
-    },[]);
+    },[]);  
     
       return (
         <section>

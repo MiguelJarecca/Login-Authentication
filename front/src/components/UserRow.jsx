@@ -1,10 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "../auth/context/AuthContext";
-import { useContext } from "react";
+import { UseAuth } from "../auth/hooks/UseAuth";
 
 export const UserRow = ({ handleDeleteUser, handleSelectUser, id, username, email, admin }) => {
 
-    const { login } = useContext(AuthContext);
+    const { login } = UseAuth();
 
     const onDeleteUser = (id) => {
         handleDeleteUser(id);

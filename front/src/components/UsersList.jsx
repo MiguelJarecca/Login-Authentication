@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { AuthContext } from "../auth/context/AuthContext";
 import { UserRow } from "./UserRow"
+import { UseAuth } from "../auth/hooks/UseAuth";
 
 export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
 
-    const { login } = useContext(AuthContext);
+    const { login } = UseAuth();
 
     return (
         <div className="container-table">

@@ -65,6 +65,9 @@ export const usersSlice = createSlice({
         onCloseForm: (state) => {
             state.visibleForm = false;
             state.userSelected = initialUserForm;
+        },
+        loadingError: (state, {payload}) => {
+            state.errors = payload;
         }
     }
  
@@ -78,4 +81,5 @@ export const {
     onUserSelectedForm,
     onOpenForm,
     onCloseForm,
+    loadingError,
 } = usersSlice.actions;

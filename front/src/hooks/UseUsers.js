@@ -1,40 +1,32 @@
-import { useContext, useReducer, useState } from "react";
-import { UsersReducer } from "../reducers/UsersReducer";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { findAll, remove, save, update } from "../services/UserService";
-import { AuthContext } from './../auth/context/AuthContext';
-import { useDispatch } from "redux"
-import { useSelector } from "redux"
-import { addUser, loadingUser, onCloseForm, onOpenForm, onUserSelectedForm, removeUser, updateUser } from "../store/slices/users/usersSlice";
+import { addUser, loadingError, loadingUser, onCloseForm, onOpenForm, onUserSelectedForm, removeUser, updateUser } from "../store/slices/users/usersSlice";
 import { initialUserForm } from './../store/slices/users/usersSlice';  
+import { UseAuth } from "../auth/hooks/UseAuth";
+import { useDispatch, useSelector } from "react-redux";
   
 export const UseUsers = () => {
 
-    // const [users, dispach] = useReducer(UsersReducer, initialUsers);
     const {users, userSelect, visibleForm, errors} = useSelector(state => state.users);
     const dispatch = useDispatch(); 
-    // const [userSelect, setUserSelect] = useState(initialUserForm);
-    // const [visibleForm, setVisibleForm] = useState(false);
 
-    // const [errors, setErrors] = useState(initialErrors);
     const navigate = useNavigate();
 
-    const { login, handleLogout } = useContext(AuthContext);
+    const { login, handleLogout } = UseAuth();
 
     //comunicacion con el userService-backend-traer todos los usarios
     const getUsers = async() => {
 
       try {
         const result = await findAll();
-        console.log(result);
+        // console.log(result);
         dispatch(loadingUser(result.data));
       } catch (error) {
         if (error.response?.status == 401) {
           handleLogout();
         }
       }
-
     };
 
     //comunicacion con el userService-backend-guardar o actualizar usuario
@@ -65,22 +57,21 @@ export const UseUsers = () => {
           icon: "success"
         });
 
-        setVisibleForm(false);
-        setUserSelect(initialUserForm);
+        dispatch(onCloseForm());
         navigate('/users');
 
       } catch (error) {
           if (error.response && error.response.status == 400) {
-            setErrors(error.response.data);
+            dispatch(loadingError(error.response.data));
 
           } else if (error.response && error.response.status == 500) {
 
               if (error.response.data?.message?.includes('UK_username')) {
-                setErrors({username: 'El username ya existe'});
+                dispatch(loadingError({username: 'El username ya existe'}));
               }
 
               if (error.response.data?.message?.includes('UK_email')) {
-                setErrors({email: 'El email ya existe'});
+                dispatch(loadingError({email: 'El email ya existe'}));
               } 
           } else if (error.response?.status == 401) {
             //es para cerrar sesion
@@ -130,9 +121,7 @@ export const UseUsers = () => {
     };
   
     const handleSelectUser = (user) => {
-        // setVisibleForm(true);
       //creamos un clon de user con el ...
-      // setUserSelect({...user});
       dispatch(onUserSelectedForm({...user}));
     }
 
@@ -141,11 +130,9 @@ export const UseUsers = () => {
     }
 
     const handleCloseForm = () => {
-        // setVisibleForm(false);
-        // setUserSelect(initialUserForm);
         //Limpiamos los errores de errors
         dispatch(onCloseForm());
-        setErrors({});
+        dispatch(loadingError({}));
     }
 
     return (
