@@ -5,6 +5,7 @@ import { LoginPage } from './auth/pages/LoginPage'
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { UserRoute } from './routes/UserRoute';
 import { UseAuth } from './auth/hooks/UseAuth';
+import { Home } from './components/Home';
 
 export const AppRoutes = () => {
 
@@ -17,11 +18,12 @@ export const AppRoutes = () => {
                 <Route path='/*' element={<UserRoute />}/>
                 ) 
             : <>
-                <Route path='/login' element={<LoginPage />}/>
+                <Route path='/' element={<Home />}/>
+                {/* <Route path='/login' element={<LoginPage />}/> */}
 
-                <Route path='/*' element={<Navigate to={'/login'}/>}/>  
+                <Route path='/*' element={<Navigate to={'/'}/>}/>  
                 </> 
-            }
+            } 
             
         </Routes>
     )
