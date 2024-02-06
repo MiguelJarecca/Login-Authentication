@@ -21,9 +21,10 @@ export const usersSlice = createSlice({
     name: 'users',
     initialState: {
         users: [],
-        userSelected: initialUserForm,
+        userSelect: initialUserForm,
         visibleForm: false, 
-        errors: initialErrors, 
+        errors: initialErrors,
+        isLoading: true, 
     },
     reducers: {
         addUser: (state, action) => {
@@ -33,7 +34,7 @@ export const usersSlice = createSlice({
                     ...action.payload,
                 }
             ];
-            state.userSelected = initialUserForm;
+            state.userSelect = initialUserForm;
             state.visibleForm = false;
         },
         removeUser: (state, action) => {
@@ -49,14 +50,15 @@ export const usersSlice = createSlice({
                 }
                 return u;
             });
-            state.userSelected = initialUserForm;
+            state.userSelect = initialUserForm;
             state.visibleForm = false;
         },
         loadingUser: (state, action) => {
             state.users = action.payload;
+            state.isLoading = false;
         },
         onUserSelectedForm: (state, action) => {
-            state.userSelected = action.payload;
+            state.userSelect = action.payload;
             state.visibleForm = true;
         },
         onOpenForm: (state) => {
@@ -64,7 +66,7 @@ export const usersSlice = createSlice({
         },
         onCloseForm: (state) => {
             state.visibleForm = false;
-            state.userSelected = initialUserForm;
+            state.userSelect = initialUserForm;
         },
         loadingError: (state, {payload}) => {
             state.errors = payload;

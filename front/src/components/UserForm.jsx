@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import Swal from "sweetalert2";
 import { UseUsers } from "../hooks/UseUsers";
 
@@ -80,7 +80,6 @@ export const UserForm = ( {userSelect, handleCloseForm}) => {
                     onChange={onInputChange}
                 />
                 <p>{errors?.email}</p>
-
                 <div>
                     <input type="checkbox"
                         name="admin" 

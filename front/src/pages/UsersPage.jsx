@@ -10,6 +10,7 @@ export const UsersPage = () => {
     users,
     userSelect,
     visibleForm,
+    isLoading,
     handleDeleteUser,
     handleSelectUser,
     handleOpenForm,
@@ -23,6 +24,12 @@ export const UsersPage = () => {
       getUsers();
     },[]);  
     
+    if (isLoading) {
+      return(
+        <div>Cargando...</div>
+      )
+    }
+
       return (
         <section>
           <h1>APP</h1>

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
   
 export const UseUsers = () => {
 
-    const {users, userSelect, visibleForm, errors} = useSelector(state => state.users);
+    const {users, userSelect, visibleForm, errors, isLoading} = useSelector(state => state.users);
     const dispatch = useDispatch(); 
 
     const navigate = useNavigate();
@@ -142,6 +142,7 @@ export const UseUsers = () => {
             initialUserForm,
             visibleForm,
             errors,
+            isLoading,
 
             handleAddUser,
             handleDeleteUser,
