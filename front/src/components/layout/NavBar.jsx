@@ -15,7 +15,16 @@ export const NavBar = () => {
         </li>
       </ul>
 
-      <div>
+      <div className="div-login">
+        <ul>
+          <li>
+              <NavLink to="/login"> Inicia Sesión</NavLink>
+              <NavLink to="/users/register"> Registrate</NavLink>
+          </li>
+        </ul>
+      </div>
+
+      {!login.isAuth || <div>
         <h3>Hola {login.user?.username}</h3>
 
           <button 
@@ -24,7 +33,8 @@ export const NavBar = () => {
             >
             Cerrar sesion
           </button>
-      </div>
+      </div>  }
+      
     </div>
   )
 }

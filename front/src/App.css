@@ -13,13 +13,13 @@ html {
 }
 
 body {
-    padding: 0rem 15%;
+    /* padding: 0rem 15%; */
     height: 100vh;
-    background-color: #b4e6e8;
+    /* background-color: #b4e6e8;
     opacity: 0.8;
     background-image:  radial-gradient(#ffffff 0.5px, transparent 0.5px), radial-gradient(#ffffff 0.5px, #b4e6e8 0.5px);
     background-size: 20px 20px;
-    background-position: 0 0,10px 10px;
+    background-position: 0 0,10px 10px; */
 } 
     
 section {
@@ -169,11 +169,11 @@ section {
 /*================= NAV-BAR ================*/
 
 .nav-bar {
-    background: #58a0d3;
+    padding: 2rem 10%;
+    background: #008a00;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 0;
 }
 
 .nav-bar ul {
@@ -184,6 +184,7 @@ section {
     font-size: 2rem;
     text-decoration: none;
     padding: 0 1rem 0 0;
+    color: #ffffff;
 }
 
 .nav-bar div {
@@ -201,6 +202,35 @@ section {
     border-radius: 5px;
     border: #b4e6e8;
     font-size: 1.5rem;
+}
+
+.section-home-title {
+    padding: 2rem 10%;
+}
+
+.section-home-title h2 {
+    font-size: 3rem;
+    color: #1a5350;
+}
+
+.section-home-title p {
+    font-size: 1.8rem;
+    color: #695f60;
+}
+
+.section-hom-intro {
+    padding: 0rem 10%;
+}
+
+.section-hom-intro p {
+    font-size: 1.8rem;
+    color: #695f60;
+}
+
+.section-home-body {
+    padding: 2rem 13%;
+    font-size: 1.8rem;
+    color: #695f60;
 }
 
 /*================= NAV-BAR ================*/
