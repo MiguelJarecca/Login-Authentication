@@ -1,6 +1,8 @@
 import Swal from "sweetalert2";
 import { UseAuth } from "../hooks/UseAuth";
 import { useState } from "react";
+import { NavBar } from "../../components/layout/NavBar";
+import { NavLink } from "react-router-dom";
 
 const initialLoginForm = {
     username: '',
@@ -36,34 +38,44 @@ export const LoginPage = () => {
     }
 
     return(
+        <>
+            <NavBar />
+            <div className="section-login">
+                <div className="container-login">
+                    <h3>Inicia Sesión</h3>
 
-        <div className="container-login">
-            <h3>Inicia Sesion</h3>
+                    <form onSubmit={onSubmit}>
+                        <label>Nombre:</label>
+                        <input 
+                            type="text"
+                            name="username"
+                            value={username}
+                            onChange={onInputChange}
+                            />
 
-            <form onSubmit={onSubmit}>
-                <input 
-                    type="text"
-                    placeholder="nombre:"
-                    name="username"
-                    value={username}
-                    onChange={onInputChange}
-                    />
+                        <label>Contraseña:</label>
+                        <input 
+                            type="text"
+                            name="password"
+                            value={password}
+                            onChange={onInputChange}
+                            />  
 
-                <input 
-                    type="text"
-                    placeholder="contraseña:"
-                    name="password"
-                    value={password}
-                    onChange={onInputChange}
-                    />  
+                        <button
+                            type="submit"
+                            >
+                            Iniciar
+                        </button>      
+                    </form>
+                </div>
+                <div className="container-register">
+                    <h3>Bienvenido!</h3>
+                    <p>Si aún no tienes una cuenta registrada lo puedes hacer aqui!</p>
 
-                <button
-                    type="submit"
-                    >
-                    Iniciar
-                </button>      
-            </form>
-        </div>
+                    <NavLink to="/users/register"> Registrate</NavLink>
 
+                </div>
+            </div>
+        </>
     )
 };
