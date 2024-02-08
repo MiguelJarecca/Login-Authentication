@@ -32,18 +32,9 @@ export const UsersPage = () => {
 
       return (
         <section>
-          <h1>APP</h1>
     
           <div className="container">
-            {!visibleForm || <UserForm 
-              userSelect={userSelect}
-              handleCloseForm={handleCloseForm}
-            />}   
-            
-            {(visibleForm || !login.isAdmin) || <button
-              onClick={handleOpenForm}>
-              Nuevo usuario
-              </button> }
+          
             
             {users.length === 0
               ? <div> No hay usuarios en el sistema!</div>
@@ -54,6 +45,15 @@ export const UsersPage = () => {
                 /> 
             }
     
+    {!visibleForm || <UserForm 
+              userSelect={userSelect}
+              handleCloseForm={handleCloseForm}
+            />}   
+            
+            {(visibleForm || !login.isAdmin) || <button
+              onClick={handleOpenForm}>
+              Nuevo usuario
+              </button> }
           </div>
         </section>
       )

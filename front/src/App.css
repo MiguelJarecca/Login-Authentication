@@ -25,14 +25,13 @@ body {
 section {
     display: flex;
     flex-direction: column;
-    background: rebeccapurple;
+    background: #f5f9f7;
 }
 
 .container {
     display: flex;
-    flex-direction: column;
-    padding: 2rem 0;
-    background: yellowgreen;
+    padding: 0 10%;
+    /* background: yellowgreen;  */
     gap: 5rem;
     flex-wrap: wrap;
 }
@@ -81,14 +80,14 @@ section {
 .container-table {
     display: flex;
     flex-direction: column;
-    min-width: 60rem ;
-    max-width: 90rem;
+    width: 70%;
 }
 
 .container-table h2 {
-    font-size: 2rem;
+    font-size: 3rem;
     margin: auto;
-    padding: 1rem;
+    padding: 3rem;
+    color: #1a5350;
 }
 
 /* Estilos generales de la tabla */
@@ -96,7 +95,7 @@ section {
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 1rem; /* Espaciado opcional entre tablas */
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
   
   /* Estilos para las celdas del encabezado */
@@ -104,8 +103,9 @@ section {
     background-color: #f2f2f2;
     font-weight: bold;
     text-align: left;
-    padding: 8px;
+    padding: 1.2rem;
     border: 1px solid #ddd;
+    color: #008a00;
   }
   
   /* Estilos alternativos para filas */
@@ -115,7 +115,7 @@ section {
   
   /* Estilos para las celdas de datos */
   td {
-    padding: 8px;
+    padding: 1.2rem;
     border: 1px solid #ddd;
   }
   
@@ -123,7 +123,10 @@ section {
   tr:hover {
     background-color: #e6e6e6;
   }
-  
+
+/*================= CREATE USUARIO ================*/
+
+
 
 /*================= LOGIN ================*/
 
@@ -228,14 +231,23 @@ section {
 
 .nav-bar div h3 {
     font-size: 2rem;
-    padding: .5rem 1.5rem .5rem .5rem;
+    padding: .5rem 3rem .5rem .5rem;
+    color: #ffffff;
+    /* font-weight: 200; */
 }
 
+/*boton cerrar sesion*/
 .nav-bar div button {
-    padding: .5rem;
+    padding: .5rem 2rem;
     border-radius: 5px;
-    border: #b4e6e8;
-    font-size: 1.5rem;
+    border: 2px solid #ffffff;
+    font-size: 1.7rem;
+    background-color: #008a00;
+    color: #ffffff;
+}
+
+.nav-bar div button:hover {
+    cursor: pointer;
 }
 
 .section-home-title {
