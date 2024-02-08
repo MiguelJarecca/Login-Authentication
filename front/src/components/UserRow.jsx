@@ -22,6 +22,7 @@ export const UserRow = ({ handleDeleteUser, handleSelectUser, id, username, emai
                 {!login.isAdmin || <>
                     <td>
                     <button
+                        className="button-update"
                         type="button"
                         onClick={() => onSelectetUser({id, username, email, admin})}
                         >
@@ -35,6 +36,7 @@ export const UserRow = ({ handleDeleteUser, handleSelectUser, id, username, emai
                     </td>
                     <td>
                         <button 
+                            className="button-delete"
                             type="button"
                             onClick={() => onDeleteUser(id)}
                             >

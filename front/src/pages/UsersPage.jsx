@@ -35,7 +35,6 @@ export const UsersPage = () => {
     
           <div className="container">
           
-            
             {users.length === 0
               ? <div> No hay usuarios en el sistema!</div>
               : <UserList 
@@ -45,16 +44,19 @@ export const UsersPage = () => {
                 /> 
             }
     
-    {!visibleForm || <UserForm 
+            {!visibleForm || <UserForm 
               userSelect={userSelect}
               handleCloseForm={handleCloseForm}
             />}   
             
-            {(visibleForm || !login.isAdmin) || <button
+            {(visibleForm || !login.isAdmin) || 
+              <button
+              className="button-new-user"
               onClick={handleOpenForm}>
               Nuevo usuario
               </button> }
           </div>
+          
         </section>
       )
 }

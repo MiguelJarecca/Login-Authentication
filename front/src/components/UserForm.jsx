@@ -52,7 +52,7 @@ export const UserForm = ( {userSelect, handleCloseForm}) => {
     }
 
     return (
-        <div>
+        <div className="container-form-user">
             <form className="form" onSubmit={onSubmitForm}>
                 <input 
                     type="text" 
