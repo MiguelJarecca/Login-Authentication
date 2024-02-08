@@ -10,7 +10,7 @@ export const NavBar = () => {
 
       <ul>
         <li>
-            <NavLink to="/users"> Usuarios</NavLink>
+            {!login.isAuth || <NavLink to="/users"> Usuarios </NavLink>}
             {!login.isAdmin || <NavLink to="/users/register"> Crear usuario</NavLink>}
         </li>
       </ul>

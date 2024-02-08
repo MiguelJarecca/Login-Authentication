@@ -49,12 +49,12 @@ export const UsersPage = () => {
               handleCloseForm={handleCloseForm}
             />}   
             
-            {(visibleForm || !login.isAdmin) || 
+            {/* {(visibleForm || !login.isAdmin) || 
               <button
               className="button-new-user"
               onClick={handleOpenForm}>
               Nuevo usuario
-              </button> }
+              </button> } */}
           </div>
           
         </section>

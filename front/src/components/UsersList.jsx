@@ -16,8 +16,8 @@ export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
                         <th>nombre</th>
                         <th>correo electronico</th>
                         {!login.isAdmin || <>
-                            <th>actualizar</th>
-                            <th>actualizar ruta</th>
+                            {/* <th>actualizar</th> */}
+                            <th>Actualizar</th>
                             <th>eliminar</th>
                         </>}
                        

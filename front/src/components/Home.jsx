@@ -12,7 +12,7 @@ export const Home = () => {
                         conocimientos.
                     </p>
                 </div>
-                <div className="section-hom-intro">
+                <div className="section-home-intro">
                     <p>En esta aplicacion estoy usando React para el front y Spring Boot
                     con java para el back, además para la seguridad se uso 
                     Spring Security 6 con Jwt.

@@ -20,7 +20,7 @@ export const UserRow = ({ handleDeleteUser, handleSelectUser, id, username, emai
                 <td>{username}</td>
                 <td>{email}</td>
                 {!login.isAdmin || <>
-                    <td>
+                    {/* <td>
                     <button
                         className="button-update"
                         type="button"
@@ -28,10 +28,10 @@ export const UserRow = ({ handleDeleteUser, handleSelectUser, id, username, emai
                         >
                         Actualizar    
                     </button>
-                    </td>
+                    </td> */}
                     <td>
-                        <NavLink to={'/users/update/' + id}>
-                            actualizar ruta
+                        <NavLink className={"url-update"} to={'/users/update/' + id}>
+                            Actualizar
                         </NavLink>
                     </td>
                     <td>

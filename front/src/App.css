@@ -93,7 +93,8 @@ section {
 .container-table {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 100%;
+    background-color: #e8ebe9;
 }
 
 .container-table h2 {
@@ -147,6 +148,15 @@ section {
     padding: .5rem 1rem;
     border: 1px solid #e51c1f;
     border-radius: 3px;
+    font-size: 1.5rem;
+  }
+
+  .url-update {
+    padding: .5rem 1rem;
+    border: 1px solid #008a00;
+    border-radius: 3px;
+    text-decoration: none;   
+    font-size: 1.8rem;   
   }
 
 /*================= CREATE USUARIO ================*/
@@ -248,7 +258,7 @@ section {
 .nav-bar ul li a{
     font-size: 2rem;
     text-decoration: none;
-    padding: 0 1rem 0 0;
+    padding: 0 2rem 0 0;
     color: #ffffff;
 }
 
@@ -278,13 +288,18 @@ section {
     cursor: pointer;
 }
 
+
+
+/*================ HOME ================*/
+
 .section-home-title {
-    padding: 2rem 10%;
+    padding: 3rem 10% 2rem 10%;
 }
 
 .section-home-title h2 {
     font-size: 3rem;
     color: #1a5350;
+    padding-bottom: 2rem;
 }
 
 .section-home-title p {
@@ -292,11 +307,11 @@ section {
     color: #695f60;
 }
 
-.section-hom-intro {
+.section-home-intro {
     padding: 0rem 10%;
 }
 
-.section-hom-intro p {
+.section-home-intro p {
     font-size: 1.8rem;
     color: #695f60;
 }
