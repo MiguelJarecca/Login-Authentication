@@ -1,14 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { findAll, remove, save, update } from "../services/UserService";
-import { addUser, loadingError, loadingUser, onCloseForm, onOpenForm, onUserSelectedForm, removeUser, updateUser } from "../store/slices/users/usersSlice";
+import { addUser, loadingError, loadingUser, onCloseForm, onOpenForm, 
+        onUserSelectedForm, removeUser, updateUser, userLogin } from "../store/slices/users/usersSlice";
 import { initialUserForm } from './../store/slices/users/usersSlice';  
 import { UseAuth } from "../auth/hooks/UseAuth";
 import { useDispatch, useSelector } from "react-redux";
   
 export const UseUsers = () => {
 
-    const {users, userSelect, visibleForm, errors, isLoading} = useSelector(state => state.users);
+    const {users, userSelect, visibleForm, errors, isLoading, initialLogin} = useSelector(state => state.users);
     const dispatch = useDispatch(); 
 
     const navigate = useNavigate();
@@ -33,7 +34,7 @@ export const UseUsers = () => {
     const handleAddUser = async(user) => {
 
       //opcional
-      if (!login.isAdmin) return;
+      // if (!login.isAdmin) return;
         
       let response;
 
@@ -58,7 +59,12 @@ export const UseUsers = () => {
         });
 
         dispatch(onCloseForm());
-        navigate('/users');
+        // navigate('/users');
+
+        console.log('cntrol 01 ', response.data);
+        dispatch(userLogin(response.data));
+
+        navigate('/login');
 
       } catch (error) {
           if (error.response && error.response.status == 400) {
@@ -143,6 +149,7 @@ export const UseUsers = () => {
             visibleForm,
             errors,
             isLoading,
+            initialLogin,
 
             handleAddUser,
             handleDeleteUser,

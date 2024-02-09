@@ -14,7 +14,13 @@ const initialErrors =
     username: '',
     password: '',
     email: '',
-}    
+}   
+
+// const initialLogin = 
+// {
+//     username: '',
+//     password: '',
+// }
 
 export const usersSlice = createSlice({
 
@@ -24,7 +30,8 @@ export const usersSlice = createSlice({
         userSelect: initialUserForm,
         visibleForm: false, 
         errors: initialErrors,
-        isLoading: true, 
+        isLoading: true,
+        initialLogin: initialUserForm,
     },
     reducers: {
         addUser: (state, action) => {
@@ -70,10 +77,16 @@ export const usersSlice = createSlice({
         },
         loadingError: (state, {payload}) => {
             state.errors = payload;
-        }
+        },
+        userLogin: (state, action) => {
+            state.initialLogin = action.payload;
+        },
     }
+    // console.log('control 03 ', userLogin);
+
  
 });
+
 
 export const {
     addUser,
@@ -84,4 +97,5 @@ export const {
     onOpenForm,
     onCloseForm,
     loadingError,
+    userLogin,
 } = usersSlice.actions;

@@ -3,6 +3,7 @@ import { UseAuth } from "../hooks/UseAuth";
 import { useState } from "react";
 import { NavBar } from "../../components/layout/NavBar";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const initialLoginForm = {
     username: '',
@@ -11,11 +12,15 @@ const initialLoginForm = {
 
 export const LoginPage = () => {
 
+    const {initialLogin} = useSelector(state => state.users);
+
     const { handleLogin } = UseAuth();
 
     const [loginForm, setLoginForm] = useState(initialLoginForm);
 
     const { username, password } = loginForm;
+
+    console.log('control 02 ', initialLogin);
 
     const onInputChange = ({ target }) => {
         const {name,value} = target;
@@ -34,6 +39,7 @@ export const LoginPage = () => {
 
         //aca implementamos el login
         handleLogin({username, password});
+        // handleLogin({userLogin.username, userLogin.password});
 
     }
 
