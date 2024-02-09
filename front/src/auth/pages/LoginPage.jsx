@@ -13,14 +13,17 @@ const initialLoginForm = {
 export const LoginPage = () => {
 
     const {initialLogin} = useSelector(state => state.users);
+    console.log('control del selector initial login ', initialLogin);
 
     const { handleLogin } = UseAuth();
 
     const [loginForm, setLoginForm] = useState(initialLoginForm);
+    // console.log('control del login ' ,loginForm);
+
+    // setLoginForm(initialLogin);
 
     const { username, password } = loginForm;
-
-    console.log('control 02 ', initialLogin);
+    // const { username, password } = initialLogin;
 
     const onInputChange = ({ target }) => {
         const {name,value} = target;
@@ -30,19 +33,36 @@ export const LoginPage = () => {
         })
     } 
 
-    const onSubmit = (event) => {
+    // const onInitialLogin = ({initialLogin}) => {
+    //     const {name, value} = initialLogin;
+    //     setLoginForm({
+    //         ...loginForm,
+    //         [name] : value
+    //     })
+    // }
+
+    const onSubmit = async(event) => {
         event.preventDefault();
 
-        if (!username || !password) {
-            Swal.fire('Error de validacion', 'username y password requeridos', 'error');
-        }
-
-        //aca implementamos el login
-        handleLogin({username, password});
-        // handleLogin({userLogin.username, userLogin.password});
-
+        
+    if (!username || !password) {
+        Swal.fire('Error de validacion', 'username y password requeridos', 'error');
+        return; // Detiene la ejecución si hay un error
     }
 
+    try {
+        // Espera a que la operación de inicio de sesión sea completada
+        await handleLogin({ username, password });
+
+        // Limpia el formulario restableciendo el estado de `loginForm` a su valor inicial
+        setLoginForm(initialLoginForm);
+
+        // Redirige al usuario o muestra una notificación de éxito, según sea necesario
+    } catch (error) {
+        // Maneja cualquier error que pueda ocurrir durante el inicio de sesión
+        Swal.fire('Error de inicio de sesión', 'No se pudo iniciar sesión, intenta de nuevo.', 'error');
+    }
+};
     return(
         <>
             <NavBar />

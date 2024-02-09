@@ -56,6 +56,8 @@ export const UseAuth = () => {
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('login');
       sessionStorage.clear();
+
+      navigate('/');
     };
 
   return {

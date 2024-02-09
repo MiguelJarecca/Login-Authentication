@@ -61,8 +61,8 @@ export const UseUsers = () => {
         dispatch(onCloseForm());
         // navigate('/users');
 
-        console.log('cntrol 01 ', response.data);
-        dispatch(userLogin(response.data));
+        console.log('cntrol 01 ', user);
+        dispatch(userLogin(user));
 
         navigate('/login');
 
