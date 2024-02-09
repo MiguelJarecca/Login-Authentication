@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import { UseAuth } from "../hooks/UseAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavBar } from "../../components/layout/NavBar";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -13,17 +13,23 @@ const initialLoginForm = {
 export const LoginPage = () => {
 
     const {initialLogin} = useSelector(state => state.users);
-    console.log('control del selector initial login ', initialLogin);
 
     const { handleLogin } = UseAuth();
 
     const [loginForm, setLoginForm] = useState(initialLoginForm);
-    // console.log('control del login ' ,loginForm);
-
-    // setLoginForm(initialLogin);
-
+  
     const { username, password } = loginForm;
-    // const { username, password } = initialLogin;
+
+    useEffect(() => {
+        // Verifica si initialLogin contiene datos para rellenar
+        if (initialLogin?.username && initialLogin?.password) {
+            setLoginForm({
+                username: initialLogin.username,
+                password: initialLogin.password,
+            });
+        }
+    }, [initialLogin]); // Este efecto se ejecutará cada vez que `initialLogin` cambie.
+
 
     const onInputChange = ({ target }) => {
         const {name,value} = target;
@@ -33,36 +39,26 @@ export const LoginPage = () => {
         })
     } 
 
-    // const onInitialLogin = ({initialLogin}) => {
-    //     const {name, value} = initialLogin;
-    //     setLoginForm({
-    //         ...loginForm,
-    //         [name] : value
-    //     })
-    // }
-
     const onSubmit = async(event) => {
         event.preventDefault();
 
-        
-    if (!username || !password) {
-        Swal.fire('Error de validacion', 'username y password requeridos', 'error');
-        return; // Detiene la ejecución si hay un error
-    }
+            
+        if (!username || !password) {
+            Swal.fire('Error de validacion', 'username y password requeridos', 'error');
+            return;
+        }
 
-    try {
-        // Espera a que la operación de inicio de sesión sea completada
-        await handleLogin({ username, password });
+        try {
+            // Espera a que la operación de inicio de sesión sea completada
+            await handleLogin({ username, password });
 
-        // Limpia el formulario restableciendo el estado de `loginForm` a su valor inicial
-        setLoginForm(initialLoginForm);
+            // Limpia el formulario restableciendo el estado de `loginForm` a su valor inicial
+            setLoginForm(initialLoginForm);
 
-        // Redirige al usuario o muestra una notificación de éxito, según sea necesario
-    } catch (error) {
-        // Maneja cualquier error que pueda ocurrir durante el inicio de sesión
-        Swal.fire('Error de inicio de sesión', 'No se pudo iniciar sesión, intenta de nuevo.', 'error');
-    }
-};
+        } catch (error) {
+            Swal.fire('Error de inicio de sesión', 'No se pudo iniciar sesión, intenta de nuevo.', 'error');
+        }
+    };
     return(
         <>
             <NavBar />

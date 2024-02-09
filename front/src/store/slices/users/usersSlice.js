@@ -16,12 +16,6 @@ const initialErrors =
     email: '',
 }   
 
-// const initialLogin = 
-// {
-//     username: '',
-//     password: '',
-// }
-
 export const usersSlice = createSlice({
 
     name: 'users',
@@ -81,10 +75,10 @@ export const usersSlice = createSlice({
         userLogin: (state, action) => {
             state.initialLogin = action.payload;
         },
+        resetLogin: (state) => {
+            state.initialLogin = initialUserForm;
+        }
     }
-    // console.log('control 03 ', userLogin);
-
- 
 });
 
 
@@ -98,4 +92,5 @@ export const {
     onCloseForm,
     loadingError,
     userLogin,
+    resetLogin,
 } = usersSlice.actions;

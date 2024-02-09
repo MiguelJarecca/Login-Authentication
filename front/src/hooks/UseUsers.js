@@ -33,9 +33,6 @@ export const UseUsers = () => {
     //comunicacion con el userService-backend-guardar o actualizar usuario
     const handleAddUser = async(user) => {
 
-      //opcional
-      // if (!login.isAdmin) return;
-        
       let response;
 
       try {
@@ -59,9 +56,8 @@ export const UseUsers = () => {
         });
 
         dispatch(onCloseForm());
-        // navigate('/users');
 
-        console.log('cntrol 01 ', user);
+        //Envio los datos del user creado para el login
         dispatch(userLogin(user));
 
         navigate('/login');

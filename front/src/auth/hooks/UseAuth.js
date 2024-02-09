@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { onLogin, onLogout } from "../../store/slices/auth/authSlice";
 import { useDispatch, useSelector } from 'react-redux';
+import { resetLogin } from "../../store/slices/users/usersSlice";
 
 export const UseAuth = () => {
 
-  // const [login, dispatch] = useReducer(LoginReducer, initialLogin);
   const dispatch = useDispatch();
   const {user, isAdmin, isAuth} = useSelector(state => state.auth);
 
@@ -58,6 +58,8 @@ export const UseAuth = () => {
       sessionStorage.clear();
 
       navigate('/');
+      dispatch(resetLogin());
+
     };
 
   return {
