@@ -34,7 +34,7 @@ export const Home = () => {
                         </li>
                         <li>
                             <p>Si ingresa como administrador tendra en control de toda
-                                la pagina, podrás: crear, leer, actualizar e eliminar
+                                la pagina, podrás: actualizar e eliminar
                                 cualquier usuario. 
                             </p>
                         </li>

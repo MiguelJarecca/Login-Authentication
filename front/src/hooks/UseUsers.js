@@ -40,9 +40,13 @@ export const UseUsers = () => {
         if (user.id === 0) {
           response = await save(user);
           dispatch(addUser(response.data));
+          navigate('/login');
+
         } else {
           response = await update(user);
           dispatch(updateUser(response.data));
+          navigate('/users');
+
         }
 
         Swal.fire({
@@ -60,7 +64,6 @@ export const UseUsers = () => {
         //Envio los datos del user creado para el login
         dispatch(userLogin(user));
 
-        navigate('/login');
 
       } catch (error) {
           if (error.response && error.response.status == 400) {

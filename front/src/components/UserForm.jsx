@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 // import Swal from "sweetalert2";
 import { UseUsers } from "../hooks/UseUsers";
+import { UseAuth } from "../auth/hooks/UseAuth";
 
 export const UserForm = ( {userSelect, handleCloseForm}) => {
 
@@ -9,6 +10,8 @@ export const UserForm = ( {userSelect, handleCloseForm}) => {
     const [userForm, setUserForm] = useState(initialUserForm);
     const [checked, setChecked] = useState(userForm.admin);
     const {id, username, password, email, admin} = userForm;
+
+    const { login } = UseAuth();
 
     useEffect (() => {
         setUserForm({...userSelect});
@@ -80,14 +83,17 @@ export const UserForm = ( {userSelect, handleCloseForm}) => {
                     onChange={onInputChange}
                 />
                 <p>{errors?.email}</p>
-                <div>
-                    <input type="checkbox"
-                        name="admin" 
-                        checked={admin}
-                        onChange={onCheckboxChange}
-                        />
-                    <label>Admin</label>    
-                </div>
+
+                {!login.isAdmin ||
+                    <div>
+                        <input type="checkbox"
+                            name="admin" 
+                            checked={admin}
+                            onChange={onCheckboxChange}
+                            />
+                        <label>Admin</label>    
+                    </div>
+                }
 
                 <input
                     type="hidden"

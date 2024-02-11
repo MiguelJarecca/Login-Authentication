@@ -8,10 +8,12 @@ export const NavBar = () => {
   return (
     <div className="nav-bar">
 
+    {login.isAuth || <NavLink to="/"> Inicio</NavLink> } 
+
       <ul>
         <li>
             {!login.isAuth || <NavLink to="/users"> Usuarios </NavLink>}
-            {!login.isAdmin || <NavLink to="/users/register"> Crear usuario</NavLink>}
+            {/* {login.isAuth|| <NavLink to="/users/register"> Crear usuario</NavLink>} */}
         </li>
       </ul>
 

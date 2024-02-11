@@ -43,6 +43,12 @@ export const UserRow = ({ handleDeleteUser, handleSelectUser, id, username, emai
                             Eliminar
                         </button>
                     </td>
+                    <td>
+                        {admin == true 
+                            ?<label>Administrador</label>
+                            :<label>Usuario</label>
+                        }
+                    </td>
                 </>}
   
             </tr>

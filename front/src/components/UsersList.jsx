@@ -18,7 +18,9 @@ export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
                         {!login.isAdmin || <>
                             {/* <th>actualizar</th> */}
                             <th>Actualizar</th>
-                            <th>eliminar</th>
+                            <th>Eliminar</th>
+                            <th>Rol</th>
+                    
                         </>}
                        
                     </tr>
@@ -31,6 +33,7 @@ export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
                             username = {user.username}
                             email = {user.email}
                             admin = {user.admin}
+                            rol = {user.admin}
                             handleDeleteUser = {handleDeleteUser}
                             handleSelectUser= {handleSelectUser}
                         />
