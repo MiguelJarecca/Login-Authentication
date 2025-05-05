@@ -1,47 +1,39 @@
 import { UserRow } from "./UserRow"
-import { UseAuth } from "../auth/hooks/UseAuth";
+import { useUsers } from "../hooks/useUsers";
+import { useAuth } from "../auth/hooks/useAuth";
 
-export const UserList = ({ users=[], handleDeleteUser, handleSelectUser }) => {
+export const UsersList = () => {
 
-    const { login } = UseAuth();
-
+    const { users } = useUsers();
+    const { login } = useAuth();
     return (
-        <div className="container-table">
-            <h2>Lista de usuarios</h2>
+        <table className="table table-hover table-striped">
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>nombre</th>
-                        <th>correo electronico</th>
-                        {!login.isAdmin || <>
-                            {/* <th>actualizar</th> */}
-                            <th>Actualizar</th>
-                            <th>Eliminar</th>
-                            <th>Rol</th>
-                    
-                        </>}
-                       
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user) => (
-                        <UserRow 
-                            key = {user.id}
-                            id = {user.id}
-                            username = {user.username}
-                            email = {user.email}
-                            admin = {user.admin}
-                            rol = {user.admin}
-                            handleDeleteUser = {handleDeleteUser}
-                            handleSelectUser= {handleSelectUser}
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>username</th>
+                    <th>email</th>
+                    {!login.isAdmin || <>
+                        <th>update</th>
+                        <th>update route</th>
+                        <th>remove</th>
+                    </>}
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    users.map(({ id, username, email, admin }) => (
+                        <UserRow
+                            key={id}
+                            id={id}
+                            username={username}
+                            email={email}
+                            admin={admin}
                         />
-                    ))}
-                   
-                </tbody>
-
-            </table>
-        </div>
-    )    
+                    ))
+                }
+            </tbody>
+        </table>
+    )
 }

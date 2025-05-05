@@ -1,32 +1,25 @@
-import './App.css'
-
-import { LoginPage } from './auth/pages/LoginPage'
-
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { UserRoute } from './routes/UserRoute';
-import { UseAuth } from './auth/hooks/UseAuth';
-import { Home } from './components/Home';
-import { RegisterPage } from './pages/RegisterPage';
+import { LoginPage } from './auth/pages/LoginPage';
+import { UserRoutes } from './routes/UserRoutes';
+import { useSelector } from 'react-redux';
 
 export const AppRoutes = () => {
 
-    const { login } = UseAuth();
+    const { isAuth } = useSelector(state => state.auth);
 
     return (
         <Routes>
-            {login.isAuth
-            ? (
-                <Route path='/*' element={<UserRoute />}/>
-                ) 
-            : <>
-                <Route path='/' element={<Home />}/>
-                <Route path='/login' element={<LoginPage />}/>
-                <Route path="users/register" element={<RegisterPage />} />
+            {
+                isAuth
+                    ? (
+                        <Route path='/*' element={<UserRoutes />} />
+                    )
+                    : <>
+                        <Route path='/login' element={<LoginPage />} />
+                        <Route path='/*' element={<Navigate to="/login" />} />
+                    </>
 
-                <Route path='/*' element={<Navigate to={'/'}/>}/>  
-                </> 
-            } 
-            
+            }
         </Routes>
-    )
+    );
 }

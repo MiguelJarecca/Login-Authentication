@@ -1,31 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const initialUserForm = 
-{
+export const initialUserForm = {
     id: 0,
     username: '',
     password: '',
     email: '',
     admin: false,
 }
-
-const initialErrors = 
-{
+const initialErrors = {
     username: '',
     password: '',
     email: '',
-}   
-
+}
 export const usersSlice = createSlice({
 
     name: 'users',
     initialState: {
         users: [],
-        userSelect: initialUserForm,
-        visibleForm: false, 
+        userSelected: initialUserForm,
+        visibleForm: false,
         errors: initialErrors,
-        isLoading: true,
-        initialLogin: initialUserForm,
     },
     reducers: {
         addUser: (state, action) => {
@@ -35,7 +29,7 @@ export const usersSlice = createSlice({
                     ...action.payload,
                 }
             ];
-            state.userSelect = initialUserForm;
+            state.userSelected = initialUserForm;
             state.visibleForm = false;
         },
         removeUser: (state, action) => {
@@ -46,20 +40,18 @@ export const usersSlice = createSlice({
                 if (u.id === action.payload.id) {
                     return {
                         ...action.payload,
-                        password: u.password
                     };
                 }
                 return u;
             });
-            state.userSelect = initialUserForm;
+            state.userSelected = initialUserForm;
             state.visibleForm = false;
         },
-        loadingUser: (state, action) => {
-            state.users = action.payload;
-            state.isLoading = false;
+        loadingUsers: (state, { payload }) => {
+            state.users = payload
         },
-        onUserSelectedForm: (state, action) => {
-            state.userSelect = action.payload;
+        onUserSelectedForm: (state, { payload }) => {
+            state.userSelected = payload;
             state.visibleForm = true;
         },
         onOpenForm: (state) => {
@@ -67,30 +59,22 @@ export const usersSlice = createSlice({
         },
         onCloseForm: (state) => {
             state.visibleForm = false;
-            state.userSelect = initialUserForm;
+            state.userSelected = initialUserForm;
+
         },
         loadingError: (state, {payload}) => {
             state.errors = payload;
-        },
-        userLogin: (state, action) => {
-            state.initialLogin = action.payload;
-        },
-        resetLogin: (state) => {
-            state.initialLogin = initialUserForm;
         }
     }
 });
-
 
 export const {
     addUser,
     removeUser,
     updateUser,
-    loadingUser,
+    loadingUsers,
     onUserSelectedForm,
     onOpenForm,
     onCloseForm,
     loadingError,
-    userLogin,
-    resetLogin,
 } = usersSlice.actions;

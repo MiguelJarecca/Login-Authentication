@@ -1,48 +1,45 @@
-import { NavLink } from "react-router-dom"
-import { UseAuth } from "../../auth/hooks/UseAuth";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../../auth/hooks/useAuth";
 
-export const NavBar = () => {
+export const Navbar = () => {
 
-  const { login, handleLogout } = UseAuth();
+    const { login, handlerLogout } = useAuth();
+    return (
+        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <div className="container-fluid">
+                <a className="navbar-brand" href="#">UsersApp</a>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
 
-  return (
-    <div className="nav-bar">
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/users">
+                                Usuarios
+                            </NavLink>
+                        </li>
+                        {!login.isAdmin ||
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/users/register">
+                                    Registrar Usuario
+                                </NavLink>
+                            </li>
+                        }
+                    </ul>
+                </div>
 
-    {login.isAuth || <NavLink to="/"> Inicio</NavLink> } 
-
-      <ul>
-        <li>
-            {!login.isAuth || <NavLink to="/users"> Usuarios </NavLink>}
-            {/* {login.isAuth|| <NavLink to="/users/register"> Crear usuario</NavLink>} */}
-        </li>
-      </ul>
-
-      {login.isAuth 
-        ? <></>
-         
-        : <div className="div-login">
-            <ul>
-              <li>
-                  <NavLink to="/login"> Inicia Sesión</NavLink>
-                  <NavLink to="/users/register"> Registrate</NavLink>
-              </li>
-            </ul>
-          </div>
-      }
-
-      {!login.isAuth || 
-        <div>
-          <h3>Hola {login.user?.username}</h3>
-
-          <button 
-            type="submit"
-            onClick={handleLogout}
-            >
-            Cerrar sesion
-          </button>
-        </div>  
-      }
-      
-    </div>
-  )
+                <div className="collapse navbar-collapse justify-content-end" id="navbarNavLogout">
+                    <span className="nav-item nav-link text-primary mx-3">
+                        {login.user?.username}
+                    </span>
+                    <button
+                        onClick={handlerLogout}
+                        className="btn btn-outline-success">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </nav>
+    );
 }

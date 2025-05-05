@@ -1,56 +1,49 @@
-import { NavLink } from "react-router-dom";
-import { UseAuth } from "../auth/hooks/UseAuth";
+import { NavLink } from "react-router-dom"
+import { useUsers } from "../hooks/useUsers";
+import { useAuth } from "../auth/hooks/useAuth";
 
-export const UserRow = ({ handleDeleteUser, handleSelectUser, id, username, email, admin }) => {
-
-    const { login } = UseAuth();
-
-    const onDeleteUser = (id) => {
-        handleDeleteUser(id);
-    }
-
-    const onSelectetUser = (user) => {
-        handleSelectUser(user);
-    }
-
+export const UserRow = ({ id, username, email, admin }) => {
+    const { handlerUserSelectedForm, handlerRemoveUser } = useUsers();
+    const { login } = useAuth();
     return (
-        
-             <tr>
-                <td>{id}</td>
-                <td>{username}</td>
-                <td>{email}</td>
-                {!login.isAdmin || <>
-                    {/* <td>
-                    <button
-                        className="button-update"
-                        type="button"
-                        onClick={() => onSelectetUser({id, username, email, admin})}
-                        >
-                        Actualizar    
-                    </button>
-                    </td> */}
+        <tr>
+            <td>{id}</td>
+            <td>{username}</td>
+            <td>{email}</td>
+
+            {!login.isAdmin ||
+                <>
                     <td>
-                        <NavLink className={"url-update"} to={'/users/update/' + id}>
-                            Actualizar
-                        </NavLink>
-                    </td>
-                    <td>
-                        <button 
-                            className="button-delete"
+                        <button
                             type="button"
-                            onClick={() => onDeleteUser(id)}
-                            >
-                            Eliminar
+                            className="btn btn-secondary btn-sm"
+                            onClick={() => handlerUserSelectedForm({
+                                id,
+                                username,
+                                email,
+                                admin
+                            })}
+                        >
+                            update
                         </button>
                     </td>
                     <td>
-                        {admin == true 
-                            ?<label>Administrador</label>
-                            :<label>Usuario</label>
-                        }
+                        <NavLink className={'btn btn-secondary btn-sm'}
+                            to={'/users/edit/' + id} >
+                            update route
+                        </NavLink>
                     </td>
-                </>}
-  
-            </tr>
-    );
-};
+                    <td>
+                        <button
+                            type="button"
+                            className="btn btn-danger btn-sm"
+                            onClick={() => handlerRemoveUser(id)}
+                        >
+                            remove
+                        </button>
+                    </td>
+                </>
+            }
+        </tr>
+    )
+}
