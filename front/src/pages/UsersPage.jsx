@@ -22,24 +22,23 @@ export const UsersPage = () => {
     return (
         <>
 
-            {!visibleForm ||
-                <UserModalForm />}
-            <div className="container my-4">
-                <h2>Users App</h2>
-                <div className="row">
-                    <div className="col">
-                        {(visibleForm || !login.isAdmin) || <button
-                            className="btn btn-primary my-2"
-                            onClick={handlerOpenForm}>
-                            Nuevo Usuario
-                        </button>}
+            {!visibleForm || <UserModalForm />}
 
-                        {
-                            users.length === 0
-                                ? <div className="alert alert-warning">No hay usuarios en el sistema!</div>
-                                : <UsersList />
-                        }
-                    </div>
+            <div className="users-page-container">
+                <div className="users-page-actions">
+                    {(visibleForm || !login.isAdmin) || <button
+                        className="actions-btn"
+                        onClick={handlerOpenForm}>
+                        Nuevo Usuario
+                    </button>}
+                </div>
+                
+                <div className="users-page-content">
+                    {
+                        users.length === 0
+                            ? <div className="alert alert-warning">No hay usuarios en el sistema!</div>
+                            : <UsersList />
+                    }
                 </div>
             </div>
         </>

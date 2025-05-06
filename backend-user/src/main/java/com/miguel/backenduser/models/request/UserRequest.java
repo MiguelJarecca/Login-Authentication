@@ -14,7 +14,7 @@ public class UserRequest {
     private String email;
 
     private boolean admin;
-
+    
     public boolean isAdmin() {
         return admin;
     }

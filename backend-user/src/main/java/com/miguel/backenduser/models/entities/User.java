@@ -54,7 +54,6 @@ public class User {
     @Transient
     private boolean admin;
 
-
     public boolean isAdmin() {
         return admin;
     }
