@@ -20,13 +20,9 @@ export const RegisterPage = () => {
     }, [id])
 
     return (
-        <div className="container my-4">
-            <h4>{ userSelected.id > 0 ? 'Editar' : 'Registrar'} Usuario</h4>
-            <div className="row">
-                <div className="col">
-                    <UserForm userSelected={userSelected} />
-                </div>
-            </div>
+        <div className="register-page-container">
+            <h4 className="title">{ userSelected.id > 0 ? 'Editar' : 'Registrar'} Usuario</h4>
+            <UserForm userSelected={userSelected} />
         </div>
     )
 }

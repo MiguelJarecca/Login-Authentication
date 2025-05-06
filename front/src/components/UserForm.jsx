@@ -64,9 +64,9 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
         setUserForm(initialUserForm);
     }
     return (
-        <form onSubmit={ onSubmit }>
+        <form className="form" onSubmit={ onSubmit }>
             <input
-                className="form-control my-3 w-75"
+                className="form-input"
                 placeholder="Username"
                 name="username"
                 value={ username}
@@ -74,7 +74,7 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
             <p className="text-danger">{ errors?.username}</p>
             
             { id > 0 || <input
-                className="form-control my-3 w-75"
+                className="form-input"
                 placeholder="Password"
                 type="password"
                 name="password"
@@ -83,14 +83,14 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
             <p className="text-danger">{errors?.password}</p>
             
             <input
-                className="form-control my-3 w-75"
+                className="form-input"
                 placeholder="Email"
                 name="email"
                 value={email}
                 onChange={onInputChange} />
             <p className="text-danger">{errors?.email}</p>
 
-            <div className="my-3 form-check">
+            <div className="form-div-check">
                 <input type="checkbox"
                     name="admin"
                     checked={admin}
@@ -105,13 +105,13 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
                 value={id} />
             
             <button
-                className="btn btn-primary"
+                className="form-create-btn"
                 type="submit">
                 {id > 0 ? 'Editar' : 'Crear'}
             </button>
 
             {!handlerCloseForm || <button
-                className="btn btn-primary mx-2"
+                className="form-close-btn"
                 type="button"
                 onClick={() => onCloseForm()}>
                 Cerrar
