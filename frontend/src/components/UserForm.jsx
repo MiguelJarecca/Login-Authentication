@@ -17,7 +17,6 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
     }, [userSelected]);
 
     const onInputChange = ({ target }) => {
-        // console.log(target.value)
         const { name, value } = target;
         setUserForm({
             ...userForm,
@@ -67,28 +66,28 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
         <form className="form" onSubmit={ onSubmit }>
             <input
                 className="form-input"
-                placeholder="Username"
+                placeholder="Nombre:"
                 name="username"
                 value={ username}
                 onChange={onInputChange} />
             <p className="text-danger">{ errors?.username}</p>
             
+            <input
+                className="form-input"
+                placeholder="Correo electrónico:"
+                name="email"
+                value={email}
+                onChange={onInputChange} />
+            <p className="text-danger">{errors?.email}</p>
+
             { id > 0 || <input
                 className="form-input"
-                placeholder="Password"
+                placeholder="Contraseña:"
                 type="password"
                 name="password"
                 value={password}
                 onChange={onInputChange} />}
             <p className="text-danger">{errors?.password}</p>
-            
-            <input
-                className="form-input"
-                placeholder="Email"
-                name="email"
-                value={email}
-                onChange={onInputChange} />
-            <p className="text-danger">{errors?.email}</p>
 
             <div className="form-div-check">
                 <input type="checkbox"

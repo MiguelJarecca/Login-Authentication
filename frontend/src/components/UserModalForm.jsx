@@ -9,7 +9,7 @@ export const UserModalForm = () => {
         <div className="modal">
             <div className="modal-content">
                 <h5 className="modal-title">
-                    {userSelected.id > 0 ? 'Editar' : 'Crear'} Modal Usuarios
+                    {userSelected.id > 0 ? 'Editar' : 'Crear'} usuario
                 </h5>
 
                 <div className="modal-body">

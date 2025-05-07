@@ -6,18 +6,21 @@ export const UsersList = () => {
 
     const { users } = useUsers();
     const { login } = useAuth();
+
     return (
         <table className="table">
 
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>username</th>
-                    <th>email</th>
+                    <th>id</th>
+                    <th>nombre</th>
+                    <th>correo electrónico</th>
+                    <th>rol</th>
+
                     {!login.isAdmin || <>
-                        <th>update</th>
-                        <th>update route</th>
-                        <th>remove</th>
+                        <th>actualizar</th>
+                        {/* <th>update route</th> */}
+                        <th>eliminar</th>
                     </>}
                 </tr>
             </thead>

@@ -34,12 +34,12 @@ export const LoginPage = () => {
     }
     return (
         <div className="login-container">
-            <h5 className="login-title">Login Page</h5>
+            <h5 className="login-title">Inicia Sesión</h5>
 
             <form className="login-form" onSubmit={ onSubmit }>
                 <input
                     className="login-input"
-                    placeholder="Username"
+                    placeholder="Nombre:"
                     name="username"
                     value={username}
                     onChange={ onInputChange }
@@ -47,7 +47,7 @@ export const LoginPage = () => {
                             
                 <input
                     className="login-input"
-                    placeholder="Password"
+                    placeholder="Contraseña:"
                     type="password"
                     name="password"
                     value={password}
@@ -56,7 +56,7 @@ export const LoginPage = () => {
                 <button
                     className="btn"
                     type="submit">
-                    Login
+                    Iniciar
                 </button>
             </form>
         </div>

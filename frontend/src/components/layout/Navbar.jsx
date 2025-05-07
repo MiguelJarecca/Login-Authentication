@@ -7,25 +7,25 @@ export const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-left">
-                <a className="navbar-brand" href="/users">UsersApp</a>
+                <a className="navbar-brand" href="/users">Usuarios</a>
 
-                <div className="navbar-link">
+                {/* <div className="navbar-link">
                     {!login.isAdmin ||
                         <NavLink to="/users/register">
                             Registrar Usuario
                         </NavLink>
                     }
-                </div>
+                </div> */}
             </div>
                 
             <div className="navbar-right">
                 <span className="navbar-username">
-                    {login.user?.username}
+                    Hola {login.user?.username}
                 </span>
                 <button
                     onClick={handlerLogout}
                     className="logout-btn">
-                    Logout
+                    Cerrar sesión
                 </button>
             </div>
         </nav>

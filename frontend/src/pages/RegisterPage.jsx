@@ -21,7 +21,7 @@ export const RegisterPage = () => {
 
     return (
         <div className="register-page-container">
-            <h4 className="title">{ userSelected.id > 0 ? 'Editar' : 'Registrar'} Usuario</h4>
+            <h4 className="title">{ userSelected.id > 0 ? 'Editar' : 'Registrar'} usuario</h4>
             <UserForm userSelected={userSelected} />
         </div>
     )

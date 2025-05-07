@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+// import { NavLink } from "react-router-dom"
 import { useUsers } from "../hooks/useUsers";
 import { useAuth } from "../auth/hooks/useAuth";
 
@@ -11,12 +11,14 @@ export const UserRow = ({ id, username, email, admin }) => {
             <td>{username}</td>
             <td>{email}</td>
 
+            <td>{admin ? 'Adm.' : 'Usr.'}</td>
+
             {!login.isAdmin ||
                 <>
                     <td>
                         <button
                             type="button"
-                            className="btn btn-secondary btn-sm"
+                            className="button-update"
                             onClick={() => handlerUserSelectedForm({
                                 id,
                                 username,
@@ -24,22 +26,22 @@ export const UserRow = ({ id, username, email, admin }) => {
                                 admin
                             })}
                         >
-                            update
+                            actualizar
                         </button>
                     </td>
-                    <td>
+                    {/* <td>
                         <NavLink className={'btn btn-secondary btn-sm'}
                             to={'/users/edit/' + id} >
                             update route
                         </NavLink>
-                    </td>
+                    </td> */}
                     <td>
                         <button
                             type="button"
-                            className="btn btn-danger btn-sm"
+                            className="button-delete"
                             onClick={() => handlerRemoveUser(id)}
                         >
-                            remove
+                            eliminar
                         </button>
                     </td>
                 </>

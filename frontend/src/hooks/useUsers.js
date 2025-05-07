@@ -28,7 +28,6 @@ export const useUsers = () => {
     }
 
     const handlerAddUser = async (user) => {
-        // console.log(user);
 
         if (!login.isAdmin) return;
 
@@ -54,17 +53,19 @@ export const useUsers = () => {
             );
             handlerCloseForm();
             navigate('/users');
+
         } catch (error) {
+
             if (error.response && error.response.status == 400) {
                 dispatch(loadingError(error.response.data));
             } else if (error.response && error.response.status == 500 &&
                 error.response.data?.message?.includes('constraint')) {
             
                 if (error.response.data?.message?.includes('UK_username')) {
-                    dispatch(loadingError({ username: 'El username ya existe!' }));
+                    dispatch(loadingError({ username: 'El nombre ya existe!' }));
                 }
                 if (error.response.data?.message?.includes('UK_email')) {
-                    dispatch(loadingError({ email: 'El email ya existe!' }));
+                    dispatch(loadingError({ email: 'El correo electrónico ya existe!' }));
                 }
             } else if (error.response?.status == 401) {
                 handlerLogout();
@@ -75,7 +76,6 @@ export const useUsers = () => {
     }
 
     const handlerRemoveUser = (id) => {
-        // console.log(id);
 
         if (!login.isAdmin) return;
 
