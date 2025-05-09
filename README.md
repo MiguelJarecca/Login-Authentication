@@ -43,15 +43,17 @@ Este es un proyecto de autenticación desarrollado como práctica del curso **"R
 
 ---
 
-## 📁 Estructura del proyecto
+## Estructura del proyecto
 
+```bash
 login-authentication/
 ├── frontend/ # Aplicación React
 └── backend/ # API REST con Spring Boot
+```
 
 ---
 
-## 🚀 Cómo ejecutar el proyecto localmente
+## Cómo ejecutar el proyecto localmente
 
 ### Requisitos previos
 - Node.js
@@ -82,7 +84,7 @@ $ npm start
 ```
 La aplicación estará disponible en: `http://localhost:5173`
 
-#### 3. Crear la base de datos en MySql
+### 3. Crear la base de datos en MySql
 
 ```sql
 -- Crear la base de datos 
@@ -107,7 +109,7 @@ INSERT INTO users_roles (user_id, role_id) VALUES
 - **usuario:** `admin`
 - **contraseña:** `admin123`
 
-#### 4. Configuración del Backend
+### 4. Configuración del Backend
 
 1. Abrir el proyecto en tu IDE (Visual Studio Code u otro).
 2. Ejecutar la clase principal del proyecto `Application.java`.
